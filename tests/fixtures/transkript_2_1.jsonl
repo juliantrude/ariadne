@@ -1,0 +1,10 @@
+{"type":"permission-mode","permissionMode":"default","sessionId":"s1"}
+{"type":"user","message":{"role":"user","content":"Was ist ein TLB?"},"isSidechain":false,"sessionId":"s1"}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"thinking","thinking":"..."}]},"sessionId":"s1"}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"Erste Antwort."}]},"sessionId":"s1"}
+{"type":"user","message":{"role":"user","content":"Okay, das passt so für mich."},"isSidechain":false,"sessionId":"s1"}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"Ich schaue nach."},{"type":"tool_use","id":"t1","name":"Read","input":{}}]},"sessionId":"s1"}
+{"type":"user","message":{"role":"user","content":[{"type":"tool_result","tool_use_id":"t1","content":"Seitentext"}]},"sessionId":"s1"}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"Was speichert der TLB?"}]},"isSidechain":true,"sessionId":"s1"}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"⟦\"caches recent translations\" | skript.pdf S. 2⟧"}]},"sessionId":"s1"}
+{"type":"last-prompt","lastPrompt":"x","sessionId":"s1"}

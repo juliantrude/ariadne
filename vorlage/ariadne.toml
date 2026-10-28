@@ -1,0 +1,37 @@
+# Ariadne – persönliche Einstellungen. Wird von tools/kern/basis.py (konfig) gelesen.
+
+[gedaechtnis]
+# Woher die Vorwissensanalyse liest, was Claude bereits über dich weiß.
+# Gelesen wird nur, nie geschrieben.
+quellen = ["~/.claude/CLAUDE.md", "~/.claude/projects/*/memory/*.md"]
+# Projekte, deren Gedächtnis Ariadne nie liest (Glob auf den Projektordner).
+ausschliessen = ["*gesundheit*", "*camping*", "*Garderobe*"]
+# Gedächtnistypen, die immer vollständig mitgelesen werden (user = über dich als Person). Alle anderen
+# nur, wenn sie zu den Stichworten des Kapitels passen.
+immer = ["user"]
+
+[plan]
+# Geschätzter Aufwand pro Konzept in Minuten, nach Beherrschung 0..4.
+aufwand_min = [90, 60, 35, 15, 0]
+# Zuschlag für verteilte Wiederholungen und für Unvorhergesehenes.
+wiederholung_zuschlag = 0.20
+puffer = 0.15
+# Dauer einer Meilensteinprüfung in Minuten.
+pruefung_min = 30
+# Wie viele neue Konzepte pro Sitzung höchstens, je nach Energie (P: Arbeitsgedächtnis).
+neue_pro_sitzung = { niedrig = 1, mittel = 2, hoch = 3 }
+# Ab wie vielen Tagen Rückstand Ariadne eine Neuverhandlung vorschlägt.
+neuverhandeln_ab_tagen = 7
+
+[meilenstein]
+# Bestanden ab diesem Anteil richtiger Antworten (richtig = 1, teilweise = 0.5).
+schwelle = 0.8
+# Zielbeherrschung, ab der ein Konzept als "sitzt" zählt.
+ziel_beherrschung = 3
+
+[pruefer]
+modell = "claude-haiku-5-5"
+eskalation = "claude-sonnet-5-5"
+timeout_s = 90
+# Antworten ohne Belegmarker und kürzer als das gelten nicht als Fachaussage.
+min_zeichen = 400

@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Einstieg für alle Werkzeuge: ariadne <werkzeug> [argumente]
+# Werkzeuge: lm plan review run ingest gedaechtnis einrichten validiere_pruefer
+# Läuft im Python-Umfeld des Plugins, arbeitet auf dem Lern-Repo im aktuellen Verzeichnis.
+set -euo pipefail
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+werkzeug="${1:-}"
+if [[ -z "$werkzeug" || ! -f "$ROOT/tools/$werkzeug.py" ]]; then
+  echo "Aufruf: ariadne <$(cd "$ROOT/tools" && ls *.py | sed 's/\.py$//' | paste -sd'|')> ..." >&2
+  exit 2
+fi
+shift
+exec uv run --quiet --project "$ROOT" python "$ROOT/tools/$werkzeug.py" "$@"

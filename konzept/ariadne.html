@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Ariadne – Lernagent</title>
+<style>
+@font-face{font-family:"Archivo";font-weight:400;src:url("file:///home/julian/projects/final_lift/roadmap-pdf/fonts/Archivo_400Regular.ttf")}
+@font-face{font-family:"Archivo";font-weight:500;src:url("file:///home/julian/projects/final_lift/roadmap-pdf/fonts/Archivo_500Medium.ttf")}
+@font-face{font-family:"Archivo";font-weight:600;src:url("file:///home/julian/projects/final_lift/roadmap-pdf/fonts/Archivo_600SemiBold.ttf")}
+@font-face{font-family:"Archivo";font-weight:700;src:url("file:///home/julian/projects/final_lift/roadmap-pdf/fonts/Archivo_700Bold.ttf")}
+@font-face{font-family:"Archivo Expanded";font-weight:700;src:url("file:///home/julian/projects/final_lift/roadmap-pdf/fonts/ArchivoExpanded-Bold.ttf")}
+@font-face{font-family:"JetBrains Mono";font-weight:400;src:url("file:///home/julian/projects/final_lift/roadmap-pdf/fonts/JetBrainsMono_400Regular.ttf")}
+@font-face{font-family:"JetBrains Mono";font-weight:500;src:url("file:///home/julian/projects/final_lift/roadmap-pdf/fonts/JetBrainsMono_500Medium.ttf")}
+:root{
+  --ink:#1B2226;--ink2:#46525A;--ink3:#7A868D;--rule:#D5DBDE;--wash:#F3F5F6;
+  --accent:#0E6B66;--accent-wash:#E3F1EF;--thread:#B23A26;--thread-wash:#F8E9E5;
+  --sans:"Archivo",Arial,sans-serif;--display:"Archivo Expanded","Archivo",sans-serif;--mono:"JetBrains Mono",monospace;
+}
+@page{size:A4;margin:20mm 19mm 22mm 19mm}
+@page:first{margin:0}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--sans);color:var(--ink);font-size:10.2pt;line-height:1.52;hyphens:auto}
+p{margin:0 0 .62em}
+h1,h2,h3,h4{font-family:var(--sans);color:var(--ink);line-height:1.2;break-after:avoid}
+h1{font-family:var(--display);font-size:20pt;margin:0 0 4mm;letter-spacing:-.01em;break-before:page}
+h1 .num{color:var(--thread);margin-right:3mm}
+h2{font-size:13pt;margin:7mm 0 2.5mm;font-weight:700}
+h3{font-size:10.8pt;margin:5mm 0 1.5mm;font-weight:700;color:var(--accent)}
+.lead{font-size:11.2pt;color:var(--ink2);line-height:1.5;margin-bottom:5mm}
+a{color:var(--accent);text-decoration:none}
+strong{font-weight:700}
+em{font-style:italic}
+code,.mono{font-family:var(--mono);font-size:8.6pt}
+code{background:var(--wash);padding:.05em .3em;border-radius:2px}
+pre{font-family:var(--mono);font-size:7.9pt;line-height:1.42;background:var(--wash);border-left:2.5px solid var(--accent);padding:3mm 4mm;margin:2mm 0 4mm;white-space:pre-wrap;break-inside:avoid}
+pre .c{color:var(--ink3)}
+pre.long{break-inside:auto}
+ul,ol{margin:0 0 .7em;padding-left:5.5mm}
+li{margin:.15em 0}
+table{width:100%;border-collapse:collapse;margin:2mm 0 5mm;font-size:8.9pt;line-height:1.38;break-inside:avoid}
+table.split{break-inside:auto}
+th{text-align:left;font-weight:700;border-bottom:1.4px solid var(--ink);padding:1.6mm 2mm;vertical-align:bottom}
+td{border-bottom:.6px solid var(--rule);padding:1.6mm 2mm;vertical-align:top}
+tr{break-inside:avoid}
+.box{border:1px solid var(--rule);background:var(--wash);padding:3.5mm 4.5mm;margin:3mm 0 5mm;break-inside:avoid}
+.box.thread{border-color:#E7C3BA;background:var(--thread-wash)}
+.box.accent{border-color:#B9DAD6;background:var(--accent-wash)}
+.box .t{font-weight:700;font-size:8pt;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);margin-bottom:1.5mm}
+.box.thread .t{color:var(--thread)}
+.box.accent .t{color:var(--accent)}
+.box p:last-child,.box ul:last-child{margin-bottom:0}
+.ev{display:inline-block;font:600 7pt/1 var(--sans);letter-spacing:.06em;padding:.9mm 1.6mm;border-radius:2px;text-transform:uppercase;white-space:nowrap}
+.ev.hoch{background:#DCEFE6;color:#1C6B45}.ev.mittel{background:#FBF0D5;color:#8A6510}.ev.niedrig{background:#F6E1DC;color:#9A3320}
+.ref{color:var(--ink3);font-size:8pt;vertical-align:super;line-height:0}
+figure{margin:4mm 0 6mm;break-inside:avoid}
+figcaption{font-size:8.4pt;color:var(--ink2);margin-top:2mm}
+figcaption b{color:var(--ink)}
+.dialog{margin:3mm 0 5mm;font-size:9.2pt}
+.turn{display:grid;grid-template-columns:19mm 1fr;gap:3mm;padding:1.8mm 0;border-bottom:.5px dashed var(--rule);break-inside:avoid}
+.turn .who{font:700 7.6pt/1.6 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ink3)}
+.turn.a .who{color:var(--accent)}
+.turn.s{background:var(--wash);padding-left:2mm;padding-right:2mm}
+.turn.s .who{color:var(--thread)}
+.turn.s .say{font-family:var(--mono);font-size:7.9pt}
+.note{font-size:8.4pt;color:var(--ink2);border-left:2px solid var(--thread);padding-left:3mm;margin:1mm 0 4mm}
+.toc{columns:1;font-size:10pt;margin-top:4mm}
+.toc div{display:flex;gap:3mm;padding:1.6mm 0;border-bottom:.5px solid var(--rule)}
+.toc .n{width:9mm;color:var(--thread);font-weight:700}
+.toc .s{color:var(--ink3);font-size:8.6pt;margin-left:auto}
+.refs{font-size:8.3pt;line-height:1.42}
+.refs li{margin:.0 0 1.3mm;break-inside:avoid}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:6mm}
+.small{font-size:8.6pt;color:var(--ink2)}
+/* Titelseite */
+.cover{width:210mm;height:297mm;position:relative;overflow:hidden;background:#F6F4EF;break-after:page;padding:24mm 22mm}
+.cover .kicker{font:600 8pt/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--ink2)}
+.cover h1.title{break-before:auto;font-family:var(--display);font-size:54pt;line-height:.95;margin:16mm 0 5mm;color:var(--ink);letter-spacing:-.02em}
+.cover .sub{font-size:15pt;line-height:1.35;color:var(--ink2);max-width:150mm}
+.cover .art{position:absolute;left:0;right:0;top:116mm;margin:0;text-align:center}
+.cover .art img{width:166mm;display:block;margin:0 auto}
+.cover .art figcaption{font-size:7.6pt;color:var(--ink3);margin-top:2mm;letter-spacing:.02em}
+.cover .meta{position:absolute;left:22mm;bottom:22mm;font-size:9pt;color:var(--ink2);line-height:1.6}
+.cover .meta b{color:var(--ink)}
+.cover .sig{position:absolute;right:22mm;bottom:21mm;text-align:right}
+.cover .sig .by{font-family:var(--display);font-weight:700;font-size:13pt;letter-spacing:-.005em;color:var(--ink)}
+.cover .sig .roles{font-size:8pt;line-height:1.5;color:var(--ink2);margin-top:0;letter-spacing:.02em}
+</style>
+</head>
+<body>
+
+<!-- ============================ TITEL ============================ -->
+<section class="cover">
+  <div class="kicker">Konzept für einen Proof of Concept · Oktober 2026</div>
+  <h1 class="title">Ariadne</h1>
+  <div class="sub">Ein Lernagent auf Basis von Claude Opus 5.5, der den Weg kennt und ihn trotzdem nicht verrät.<br><br>Wie Menschen lernen, was daraus für einen KI-Tutor folgt, wie er gebaut ist, warum er plausibel funktioniert und wie man ihn einrichtet.</div>
+  <figure class="art"><img src="bild.png" alt="Ariadne reicht Theseus den Faden"><figcaption>Niccolò Bambini: Ariadne und Theseus</figcaption></figure>
+  <div class="sig"><div class="roles">Concept &amp; Architecture: Julian Trude<br>Authored with Claude Opus 5.5</div></div>
+  <div class="meta"><b>Zielgruppe:</b> Studierende der Informatik im höheren Semester<br><b>Modelle:</b> Claude Opus 5.5 (Tutor) · Haiku 5.5 (Prüfer) · Sonnet 5 (Eskalation)<br><b>Plattform:</b> Claude Code, lokal, alles als Klartext im Git-Repo</div>
+</section>
+
+<!-- ============================ INHALT ============================ -->
+<h1 style="break-before:auto">Inhalt</h1>
+<div class="toc">
+  <div><span class="n">1</span>Kurzfassung</div>
+  <div><span class="n">2</span>Der Einwand zuerst: KI kann Lernen schaden<span class="s">Bastani, Kestin und drei Einwände aus der Zielgruppe</span></div>
+  <div><span class="n">3</span>Wie Menschen lernen<span class="s">elf Mechanismen mit Belegen</span></div>
+  <div><span class="n">4</span>Was daraus für einen KI-Tutor folgt<span class="s">das Labyrinth und zwölf Designprinzipien</span></div>
+  <div><span class="n">5</span>Architektur<span class="s">Harness, Lernermodell, Hinweisleiter, Quellenprüfung</span></div>
+  <div><span class="n">6</span>Ein Lerntag mit Ariadne<span class="s">Klausurmodus und Forschungsmodus, durchgespielt</span></div>
+  <div><span class="n">7</span>Warum das plausibel funktioniert und wo die Grenzen liegen</div>
+  <div><span class="n">8</span>Einrichtung, Bau und Test</div>
+  <div><span class="n">9</span>Verworfene Alternativen</div>
+  <div><span class="n">A</span>Quellen</div>
+</div>
+
+<div class="box" style="margin-top:10mm">
+  <div class="t">Wie dieses Dokument argumentiert</div>
+  <p>Ariadne ist nicht empirisch untersucht. Das Dokument behauptet deshalb nicht, dass sie wirkt. Es begründet, <strong>warum es plausibel ist</strong>, dass sie wirkt: Jedes Designelement wird auf einen Lernmechanismus zurückgeführt, und jeder Mechanismus auf veröffentlichte Studien. Wo die Belege dünn sind oder nur eingeschränkt übertragbar, steht das dabei.</p>
+  <p>Die Belegstärke ist durchgehend markiert: <span class="ev hoch">hoch</span> heißt vielfach repliziert oder durch Metaanalysen gestützt. <span class="ev mittel">mittel</span> heißt durch einzelne gute Studien gestützt. <span class="ev niedrig">niedrig</span> heißt plausibel abgeleitet, aber nicht direkt untersucht.</p>
+</div>
+
+<!-- ============================ 1 ============================ -->
+<h1><span class="num">1</span>Kurzfassung</h1>
+
+<p class="lead">Generative KI kann Lernen messbar verschlechtern. Sie kann es aber auch messbar verbessern. Welcher Fall eintritt, entscheidet nicht das Modell, sondern das Design drumherum. Ariadne ist ein Entwurf, der konsequent auf der richtigen Seite dieser Linie gebaut ist.</p>
+
+<p><strong>Der Ausgangsbefund.</strong> In einem Feldexperiment mit knapp tausend Schülern verbesserte ungebremster GPT-4-Zugang die Übungsnoten um 48 %. In der Prüfung danach, ohne KI, schnitten dieselben Schüler aber 17 % schlechter ab als Schüler, die nie KI hatten [1]. Eine Variante mit didaktischen Leitplanken hob diesen Schaden weitgehend auf. Ein anderer, didaktisch gebauter KI-Tutor brachte Harvard-Studierenden in weniger Zeit mehr als den doppelten Lernzuwachs eines guten aktiven Präsenzunterrichts [2].</p>
+
+<p><strong>Das Prinzip.</strong> Ariadne kennt den Weg durchs Labyrinth, verrät ihn aber nicht. Zu jeder Aufgabe erstellt sie vorab eine versteckte <em>Lösungslandkarte</em>: Schlüsseleinsichten, typische Fehlvorstellungen, Zeitfallen. Der Lernende muss jeden Schritt zuerst selbst versuchen. Erst dann hilft Ariadne, und zwar über eine Hinweisleiter in vier Stufen, von der Rückfrage bis zur vollständigen Erklärung. Lehrreiche Sackgassen lässt sie zu, unproduktive verhindert sie. Wo immer möglich, widerlegt nicht die KI einen Irrtum, sondern die Maschine: Vorhersage aufschreiben, Code ausführen, vergleichen.</p>
+
+<p><strong>Die Technik.</strong> Ariadne läuft in Claude Code, lokal, mit dem Abo. Alles ist Klartext in einem Git-Repo: Regeln, Lernermodell, Sitzungsprotokolle. Was zwingend gelten muss, setzen <em>Hooks</em> in Code durch, nicht der Prompt:</p>
+<ul>
+  <li>Jedes Zitat wird gegen den Text der angegebenen Seite geprüft. Ein erfundenes Zitat kommt nicht durch.</li>
+  <li>Jede fachliche Antwort prüft zusätzlich ein günstiges Zweitmodell (Haiku 5.5).</li>
+  <li>Das Lernermodell kann der Tutor nur über ein Skript mit festen Regeln ändern.</li>
+  <li>Wiederholungen plant der FSRS-Algorithmus.</li>
+</ul>
+
+<p><strong>Zwei Modi.</strong> Im <em>Klausurmodus</em> wird Kursstoff erarbeitet, wiederholt und unter Prüfungsbedingungen geübt. Im <em>Forschungsmodus</em> werden Paper seziert: Fragestellung, Design, Statistik, Schwächen der Aussagekraft. Literatursuche gehört ausdrücklich nicht dazu; dafür sind Google Scholar und Zotero besser, schneller und sparsamer.</p>
+
+<p><strong>Warum das plausibel funktioniert.</strong> Ariadne erfindet kein neues Lernen. Sie macht die Techniken billig, deren Wirksamkeit am besten belegt ist, die Studierende aber kaum nutzen, weil sie mühsam sind: Abrufübung, verteiltes Wiederholen, Selbsterklärung, sofortiges Feedback, verschachteltes Üben [3]. Zeit spart sie vor allem an vier Stellen:</p>
+<ul>
+  <li>weniger unproduktives Feststecken,</li>
+  <li>Feedback sofort statt erst in der nächsten Übung,</li>
+  <li>kein Wiederlesen, das sich nach Lernen anfühlt, aber keins ist,</li>
+  <li>Wiederholung genau dann, wenn das Vergessen einsetzt.</li>
+</ul>
+
+<p><strong>Was offen bleibt.</strong> Die Kernstudien stammen aus Schulmathematik und Einführungsphysik und messen überwiegend kurzfristig. Die Übertragung auf Informatik im höheren Semester ist plausibel, aber nicht belegt. Die Quellenprüfung garantiert, dass ein Zitat existiert, nicht aber, dass es die Aussage stützt. Kapitel 7 benennt diese Grenzen einzeln.</p>
+
+<!-- ============================ 2 ============================ -->
+<h1><span class="num">2</span>Der Einwand zuerst: KI kann Lernen schaden</h1>
+
+<p class="lead">Wer gegenüber KI im Studium skeptisch ist, hat dafür einen guten empirischen Grund. Dieses Kapitel stellt ihn an den Anfang, weil das gesamte Konzept als Antwort darauf gebaut ist.</p>
+
+<h2>2.1 Bastani et al. (2025): Die Krücke</h2>
+
+<p>Bastani, Bastani, Sungu und Kollegen ließen knapp tausend Mathe-Schüler in der Türkei während regulärer Übungsstunden mit einem von zwei GPT-4-Tutoren arbeiten. Die Studie erschien 2025 in den <em>Proceedings of the National Academy of Sciences</em> [1]. Die beiden Varianten:</p>
+<ul>
+  <li><strong>GPT Base</strong> verhielt sich wie die normale ChatGPT-Oberfläche.</li>
+  <li><strong>GPT Tutor</strong> hatte Prompts, die das Lernen schützen sollten: Er gab Hinweise statt Lösungen.</li>
+</ul>
+<p>Danach schrieben alle eine Prüfung <strong>ohne</strong> KI.</p>
+
+<table>
+  <tr><th>Gruppe</th><th>Übung mit KI</th><th>Prüfung ohne KI, verglichen mit Gruppe ohne KI</th></tr>
+  <tr><td>GPT Base</td><td>+48 %</td><td><strong style="color:var(--thread)">−17 %</strong></td></tr>
+  <tr><td>GPT Tutor</td><td>+127 %</td><td>Schaden „largely mitigated“, also weitgehend aufgehoben</td></tr>
+</table>
+
+<p>Die Autoren deuten den Befund so: Ohne Leitplanken benutzen Schüler die KI als <strong>Krücke</strong>. Sie lassen sich die Lösung geben, statt sie zu erarbeiten. Das sieht in der Übung nach Leistung aus. Gelernt wird dabei aber nichts, und das zeigt sich, sobald die Krücke weg ist.</p>
+
+<div class="box">
+  <div class="t">Zum Erratum</div>
+  <p>Zu der Studie gibt es eine Korrektur (PNAS 122(34), e2518204122). Sie betrifft ausschließlich eine Autorenzugehörigkeit. Methodik und Befunde sind unverändert.</p>
+</div>
+
+<p><strong>Was die Studie zeigt, und was nicht.</strong> Sie zeigt nicht, dass KI dem Lernen schadet. Sie zeigt, dass <em>dasselbe Modell</em> je nach Gestaltung schadet oder nicht. Beide Gruppen nutzten GPT-4. Den Unterschied machten allein die Anweisungen, wie der Tutor helfen durfte. Für jede Diskussion über KI im Studium ist das der wichtigste Punkt: Die Frage lautet nicht „KI ja oder nein“, sondern „welches Design“.</p>
+
+<h2>2.2 Kestin et al. (2025): Die Gegenprobe</h2>
+
+<p>Kestin, Miller und Kollegen verglichen in einem Harvard-Physikkurs mit 194 Studierenden zwei Formen des Lernens [2]:</p>
+<ul>
+  <li>einen KI-Tutor, gebaut nach denselben didaktischen Prinzipien wie der Präsenzunterricht,</li>
+  <li><strong>aktiven</strong> Präsenzunterricht mit Peer Instruction und Kleingruppenarbeit. Die Vergleichsgruppe bekam also keine Frontalvorlesung, sondern gute Lehre.</li>
+</ul>
+<p>Das Design war ein Crossover: Jede Person durchlief beide Bedingungen, in zwei aufeinanderfolgenden Wochen mit zwei Themen.</p>
+
+<table>
+  <tr><th>Messgröße</th><th>Ergebnis</th></tr>
+  <tr><td>Lernzuwachs gegenüber dem Vortest</td><td>beim KI-Tutor im Median mehr als doppelt so hoch</td></tr>
+  <tr><td>Effektstärke</td><td>0,63 laut linearer Regression; 0,73 bis 1,3 Standardabweichungen mit Korrektur des Deckeneffekts (Quantilsregression)</td></tr>
+  <tr><td>Zeitaufwand</td><td>Median 49 Minuten mit KI gegenüber 60 Minuten im Präsenzunterricht</td></tr>
+</table>
+
+<p>Für das Konzept hier sind zwei Details aus der Studie wichtiger als die Schlagzahl:</p>
+<ol>
+  <li><strong>Ein Systemprompt allein reichte nicht.</strong> Die Autoren berichten, dass er die Struktur mehrteiliger Aufgaben nicht zuverlässig hielt; der Tutor sprang zwischen Teilaufgaben. Deshalb erzwang die Plattform die Reihenfolge. Daraus folgt Designprinzip P11: Struktur gehört in Code, nicht in den Prompt.</li>
+  <li><strong>Halluzinationen wurden durch vorab geschriebene Lösungen eingedämmt.</strong> Der Tutor bekam ausgearbeitete Musterlösungen Schritt für Schritt in den Prompt. Daraus folgt die Lösungslandkarte (P3).</li>
+</ol>
+
+<div class="box thread">
+  <div class="t">Grenze der Studie</div>
+  <p>Kestin misst nur direkt nach der Lektion. Ob der Vorsprung nach Wochen noch besteht, ist nicht untersucht. Bastani zeigt aber gerade, dass der Unterschied zwischen kurzfristiger Leistung und echtem Lernen entscheidend sein kann. Die Autoren selbst nennen verteiltes Wiederholen als nächsten Schritt. Ariadne baut es fest ein (Abschnitt 5.4).</p>
+</div>
+
+<h2>2.3 Drei Einwände aus der Zielgruppe</h2>
+
+<h3>Einwand 1: „Zusammenhänge muss ich selbst finden. Wenn sie mir jemand präsentiert, lerne ich sie nur auswendig.“</h3>
+
+<p><strong>Darin steckt viel Richtiges.</strong> Was man selbst hervorbringt, behält man besser als das, was man nur liest. Das ist der Generierungseffekt [4]. Anstrengung beim Lernen ist oft ein Zeichen, dass gelernt wird, nicht ein Hindernis; Bjork nennt das <em>desirable difficulties</em> [5]. Bastani zeigt genau den befürchteten Schaden, wenn die KI präsentiert statt fordert. Ariadne ist deshalb auf der Seite dieses Einwands gebaut: Sie präsentiert keine Zusammenhänge zum Mitschreiben.</p>
+
+<p><strong>Wo die Forschung widerspricht:</strong></p>
+<ul>
+  <li><strong>Selbstfinden ganz ohne Anleitung ist für Neulinge in einem Gebiet nachweislich weniger wirksam</strong> als angeleitetes Lernen [6, 7]. Wer keine Struktur im Kopf hat, sucht im Dunkeln und überlastet das Arbeitsgedächtnis (Abschnitt 3.1).</li>
+  <li><strong>Stundenlanges Feststecken an einer irrelevanten Stelle ist kein produktives Ringen,</strong> sondern verlorene Zeit.</li>
+  <li><strong>Selbst gefundene Zusammenhänge sind oft falsch, ohne dass man es merkt.</strong> Menschen halten ihr eigenes Verständnis systematisch für tiefer, als es ist [8].</li>
+</ul>
+
+<p>Die Antwort ist deshalb nicht „Ariadne findet die Zusammenhänge für dich“. Sie lautet: <strong>Du findest sie selbst. Ariadne übernimmt die drei Dinge, die man allein schlecht kann.</strong> Sie stellt die richtige Frage im richtigen Moment, sie meldet sofort zurück, ob der gefundene Zusammenhang trägt, und sie deckt Fehlvorstellungen auf, die man selbst nicht bemerken würde.</p>
+
+<h3>Einwand 2: „Für Recherche bin ich mit Google Scholar schneller und energetisch günstiger.“</h3>
+
+<p><strong>Das stimmt, und Ariadne recherchiert deshalb nicht.</strong> Sprachmodelle erfinden Literatur: In einer Untersuchung von 636 Literaturangaben aus KI-generierten Übersichten waren bei GPT-3.5 55 % und bei GPT-4 noch 18 % frei erfunden [9]. Neuere Modelle sind besser, aber eine Suchmaschine über einen echten Index ist für das Finden von Literatur grundsätzlich das richtige Werkzeug.</p>
+
+<p>Ariadnes Forschungsmodus beginnt <strong>erst, wenn das Paper gefunden ist</strong>, nämlich bei der Frage, ob man es verstanden hat. Was ist die Hypothese? Misst das Design, was es zu messen behauptet? Was bedeutet diese Effektstärke? Welche Schwäche der Aussagekraft hat das Paper selbst nicht genannt? Das kann keine Suchmaschine beantworten.</p>
+
+<p>Der Energieeinwand ist berechtigt und wird in Abschnitt 7.5 mit Zahlen behandelt.</p>
+
+<h3>Einwand 3: „Die KI halluziniert. Ich kann ihr nichts glauben.“</h3>
+
+<p>Auch das ist berechtigt, und „das Modell ist inzwischen gut genug“ wäre keine Antwort. Ariadne geht deshalb einen anderen Weg: Man soll ihr nicht glauben müssen. Fachliche Aussagen tragen eine Belegklasse. Zitate werden in Code gegen die Quelle geprüft, und was sich ausführen lässt, wird ausgeführt statt behauptet. Abschnitt 5.6 beschreibt, was dabei garantiert ist und was nicht.</p>
+
+<!-- ============================ 3 ============================ -->
+<h1><span class="num">3</span>Wie Menschen lernen</h1>
+
+<p class="lead">Dieses Kapitel fasst zusammen, was die kognitive Psychologie über Lernen weiß, soweit es für den Entwurf eines Tutors relevant ist. Es ist kein Lehrbuch, sondern das Fundament, auf das jedes Designelement in Kapitel 4 verweist.</p>
+
+<h2>3.1 Das Nadelöhr: Das Arbeitsgedächtnis</h2>
+<p>Alles, was gelernt wird, muss durch das Arbeitsgedächtnis. Dieses kann nur wenige Informationseinheiten gleichzeitig halten; die Schätzungen liegen bei etwa vier [10]. Die <strong>Cognitive Load Theory</strong> leitet daraus ab: Lernen scheitert oft nicht an mangelnder Intelligenz, sondern daran, dass zu viele unverbundene Elemente gleichzeitig verarbeitet werden müssen [11]. Wer eine Aufgabe ohne jedes Vorwissen durch blindes Probieren löst, verbraucht die Kapazität für die Suche und hat keine mehr für das Lernen.</p>
+<p><span class="ev hoch">hoch</span> <em>Folge für den Tutor:</em> Er dosiert, wie viel gleichzeitig neu ist. Hat jemand noch gar kein Vorwissen, braucht er Struktur, keine freie Suche.</p>
+
+<h2>3.2 Verständnis heißt: vernetzte Schemata</h2>
+<p>Das Langzeitgedächtnis ist praktisch unbegrenzt. Es speichert Wissen nicht als Liste, sondern als <strong>Schemata</strong>: vernetzte Strukturen, die viele Einzelheiten zu einer Einheit bündeln. Eine Expertin sieht in einer Seitentabelle nicht zwölf Felder, sondern ein einziges Konzept. Damit bleibt ihr Arbeitsgedächtnis für das eigentliche Problem frei. „Verstehen“ im Unterschied zu „Auswendiglernen“ bedeutet in diesem Bild: Neues ist an vorhandene Schemata angeschlossen, sodass man daraus ableiten kann, statt nur abzurufen.</p>
+<p><span class="ev hoch">hoch</span> <em>Folge:</em> Der Tutor muss wissen, welche Schemata schon da sind. Das leistet das Lernermodell. Er muss Verbindungen herstellen lassen, nicht vorsagen.</p>
+
+<h2>3.3 Abrufen stärkt das Gedächtnis mehr als Wiederlesen</h2>
+<p>Einer der robustesten Befunde der Lernforschung ist der <strong>Testing-Effekt</strong>. Wer Stoff aus dem Gedächtnis abruft, behält ihn langfristig deutlich besser als jemand, der ihn in derselben Zeit wiederholt liest [12]. Das gilt sogar für <strong>erfolglose</strong> Abrufversuche: Wer vor dem Lernen eine Frage zu beantworten versucht und scheitert, lernt die Antwort danach besser [13, 14]. Der Versuch bereitet das Gedächtnis darauf vor, die Lösung einzuordnen.</p>
+<p><span class="ev hoch">hoch</span> <em>Folge:</em> Erst versuchen, dann Hilfe bekommen. Das ist der Kern der Hinweisleiter.</p>
+
+<h2>3.4 Verteilen schlägt Pauken</h2>
+<p>Dieselbe Lernzeit, auf mehrere Termine verteilt, führt zu deutlich besserem Langzeitbehalten als geballtes Lernen. Eine Metaanalyse über Hunderte Experimente bestätigt das [15]. Am wirksamsten ist der Abstand, wenn die Wiederholung kurz vor dem Vergessen liegt. Spaced-Repetition-Algorithmen wie FSRS schätzen diesen Zeitpunkt pro Lerninhalt aus der bisherigen Abrufgeschichte [16].</p>
+<p><span class="ev hoch">hoch</span> <em>Folge:</em> Ein eingebauter Wiederholungsplaner, nicht als Option, sondern als Pflicht.</p>
+
+<h2>3.5 Generieren und erwünschte Schwierigkeiten</h2>
+<p>Wer eine Information selbst erzeugt, etwa ergänzt, herleitet oder vorhersagt, behält sie besser als jemand, der sie nur liest [4]. Allgemeiner: Bedingungen, die das Lernen <em>im Moment</em> erschweren, verbessern oft das <em>langfristige</em> Behalten und den Transfer [5]. Das gilt für Abrufen statt Lesen, Verteilen statt Pauken und Mischen statt Blocken. Die Schwierigkeit muss allerdings lösbar sein. Eine unlösbare Aufgabe ist nicht erwünscht schwer, sondern nur frustrierend.</p>
+<p><span class="ev hoch">hoch</span> <em>Folge:</em> Der Tutor macht es nicht bequem. Er macht es so schwer, dass es gerade noch lösbar ist.</p>
+
+<h2>3.6 Selbsterklärung</h2>
+<p>Lernende, die sich beim Durcharbeiten eines Beispiels jeden Schritt selbst erklären („warum folgt das?“), verstehen die Prinzipien besser und lösen neue Aufgaben erfolgreicher [17]. Die Selbsterklärung zwingt dazu, Lücken im eigenen Verständnis zu bemerken und zu füllen.</p>
+<p><span class="ev hoch">hoch</span> <em>Folge:</em> Nach jeder gelösten Schlüsselstelle fordert der Tutor eine Erklärung in eigenen Worten.</p>
+
+<h2>3.7 Vorhersagefehler und Feedback</h2>
+<p>Feedback gehört zu den wirksamsten Einflüssen auf Lernen überhaupt, aber nicht jedes Feedback hilft [18]. Wirksam ist Feedback, das sich auf die Aufgabe und den Lösungsweg bezieht, zeitnah kommt und eine Lücke zwischen dem Ist und dem Ziel sichtbar macht. Feedback, das nur lobt oder die Person bewertet, hilft wenig. Besonders lernwirksam ist ein erlebter <strong>Vorhersagefehler</strong>: Wer vorher festgelegt hat, was passieren wird, und dann etwas anderes sieht, kann den Irrtum nicht mehr wegerklären.</p>
+<p><span class="ev hoch">hoch</span> <em>Folge:</em> Vorhersage aufschreiben, dann ausführen. Bei Low-Level-Themen ist die Maschine der überzeugendste Feedbackgeber.</p>
+
+<h2>3.8 Mischen statt Blocken</h2>
+<p>Wer verschiedene Aufgabentypen gemischt übt statt blockweise, schneidet in Tests besser ab, obwohl sich das Mischen beim Üben schwerer und weniger erfolgreich anfühlt [19]. Beim Mischen muss man jedes Mal erst erkennen, <em>welche</em> Methode passt. Genau das verlangt eine Klausur.</p>
+<p><span class="ev mittel">mittel</span> <em>Folge:</em> Die Klausursimulation mischt Themen.</p>
+
+<h2>3.9 Die Kompetenzillusion</h2>
+<p>Menschen sind schlechte Richter ihres eigenen Lernens. Sie halten ihr Verständnis für tiefer, als es ist [8]. Sie bevorzugen Lernmethoden, die sich flüssig anfühlen, etwa Wiederlesen und Markieren, obwohl diese wenig bringen [3, 20]. In einer Physik-Studie lernten Studierende im aktiven Unterricht nachweislich mehr, <strong>fühlten</strong> sich aber, als hätten sie weniger gelernt als in der Vorlesung [21]. Für jede Form von Lernunterstützung ist das brisant: Was sich gut anfühlt, ist oft das Falsche. Ein bequemer KI-Tutor wäre deshalb gefährlich, und Bastanis GPT Base ist genau dieser Fall.</p>
+<p><span class="ev hoch">hoch</span> <em>Folge:</em> Der Tutor macht die Kalibrierung sichtbar, also den Abstand zwischen „ich glaube, ich kann das“ und „ich kann das“.</p>
+
+<h2>3.10 Anleitung, Produktives Scheitern und der Expertise-Reversal-Effekt</h2>
+<p>Zwei Befundlinien scheinen sich zu widersprechen, ergänzen sich aber:</p>
+<ul>
+  <li><strong>Anleitung hilft Neulingen.</strong> Ausgearbeitete Beispiele sind für Anfänger wirksamer als freies Problemlösen [6, 7]. Mit wachsendem Vorwissen kehrt sich das um: Was Anfängern hilft, bremst Fortgeschrittene. Das ist der <em>Expertise-Reversal-Effekt</em> [6].</li>
+  <li><strong>Produktives Scheitern hilft beim Verstehen.</strong> Wer sich zuerst an einem Problem versucht, dabei scheitert und <em>danach</em> die Erklärung bekommt, versteht das Konzept tiefer als jemand, der zuerst erklärt bekommt [22]. Eine Metaanalyse bestätigt das für konzeptuelles Wissen, vor allem wenn die anschließende Erklärung an die gescheiterten Versuche anknüpft [23].</li>
+</ul>
+<p>Die Auflösung: Gescheiterte Versuche sind wertvoll, <strong>wenn danach Anleitung folgt</strong>. Wertlos ist es, die ganze Zeit ohne Anleitung zu suchen. Und wie viel Struktur jemand braucht, hängt vom Vorwissen ab.</p>
+<p><span class="ev hoch">hoch</span> für Anleitung bei Neulingen, <span class="ev mittel">mittel</span> für Produktives Scheitern. <em>Folge:</em> Lehrreiche Sackgassen zulassen, aber auffangen. Bei fehlendem Vorwissen mit einem Beispiel starten.</p>
+
+<h2>3.11 Was Einzeltutoring so wirksam macht</h2>
+<p>Bloom beschrieb 1984 das „2-Sigma-Problem“: Schüler mit Einzeltutor schnitten um zwei Standardabweichungen besser ab als im Klassenunterricht [24]. Spätere Analysen fanden kleinere, aber immer noch große Effekte. VanLehn verglich 2011 systematisch: Menschliches Tutoring erreicht etwa 0,79 Standardabweichungen. Computer-Tutoren, die Schritt für Schritt begleiten, kamen mit etwa 0,76 fast heran [25].</p>
+<p>Was gutes Tutoring ausmacht, beschrieben Wood, Bruner und Ross schon 1976 als <strong>Scaffolding</strong>, also Lernen am Gerüst [26]. Der Tutor übernimmt nur die Teile, die der Lernende noch nicht allein schafft, und nimmt die Unterstützung zurück, sobald er sie nicht mehr braucht. Daraus ergibt sich die <strong>Kontingenzregel</strong>: nach einem Fehlschlag mehr Hilfe, nach einem Erfolg weniger.</p>
+<p><span class="ev hoch">hoch</span> <em>Folge:</em> Die Hinweisleiter folgt der Kontingenzregel.</p>
+
+<h2>3.12 Übersicht</h2>
+<table>
+  <tr><th style="width:24%">Mechanismus</th><th>Kernaussage</th><th style="width:13%">Belegstärke</th><th style="width:9%">Quelle</th></tr>
+  <tr><td>Arbeitsgedächtnis</td><td>Kapazität eng; zu viel Neues gleichzeitig verhindert Lernen</td><td><span class="ev hoch">hoch</span></td><td>10, 11</td></tr>
+  <tr><td>Schemata</td><td>Verständnis = Anschluss an vorhandene Strukturen</td><td><span class="ev hoch">hoch</span></td><td>11</td></tr>
+  <tr><td>Testing-Effekt</td><td>Abrufen schlägt Wiederlesen, auch erfolgloses Abrufen hilft</td><td><span class="ev hoch">hoch</span></td><td>12–14</td></tr>
+  <tr><td>Verteiltes Lernen</td><td>Abstände schlagen Pauken</td><td><span class="ev hoch">hoch</span></td><td>15, 16</td></tr>
+  <tr><td>Generierung</td><td>Selbst Erzeugtes bleibt besser</td><td><span class="ev hoch">hoch</span></td><td>4, 5</td></tr>
+  <tr><td>Selbsterklärung</td><td>Schritte selbst begründen deckt Lücken auf</td><td><span class="ev hoch">hoch</span></td><td>17</td></tr>
+  <tr><td>Feedback</td><td>aufgabenbezogen und zeitnah wirkt; Vorhersagefehler wirken stark</td><td><span class="ev hoch">hoch</span></td><td>18</td></tr>
+  <tr><td>Verschachteln</td><td>Mischen schlägt Blocken bei Transfer und Prüfung</td><td><span class="ev mittel">mittel</span></td><td>19</td></tr>
+  <tr><td>Kompetenzillusion</td><td>Gefühltes Lernen ≠ tatsächliches Lernen</td><td><span class="ev hoch">hoch</span></td><td>8, 20, 21</td></tr>
+  <tr><td>Expertise-Reversal</td><td>Neulinge brauchen Struktur, Fortgeschrittene Freiraum</td><td><span class="ev hoch">hoch</span></td><td>6, 7</td></tr>
+  <tr><td>Produktives Scheitern</td><td>Scheitern vor der Erklärung vertieft Verständnis</td><td><span class="ev mittel">mittel</span></td><td>22, 23</td></tr>
+  <tr><td>Scaffolding</td><td>Hilfe nur so viel wie nötig, nach Erfolg zurücknehmen</td><td><span class="ev hoch">hoch</span></td><td>25, 26</td></tr>
+</table>
+
+<!-- ============================ 4 ============================ -->
+<h1><span class="num">4</span>Was daraus für einen KI-Tutor folgt</h1>
+
+<p class="lead">Ein Tutor, der mehr weiß als der Lernende, steht vor einem Paradox: Er kennt die Antwort, aber gerade die Antwort ist das, was er nicht geben darf. Ariadne löst das mit einem Bild und zwölf Prinzipien.</p>
+
+<h2>4.1 Das Labyrinth</h2>
+
+<figure>
+<svg viewBox="0 0 680 270" width="100%" font-family="Archivo, sans-serif" font-size="11">
+  <rect x="1" y="1" width="678" height="268" fill="#F3F5F6" stroke="#D5DBDE"/>
+  <svg x="22" y="14" width="226" height="243" viewBox="-6 -6 212 228" fill="none">
+  <path d="M45 1V23M67 23H89M89 23H111M155 1V23M23 23V45M1 45H23M23 45H45M67 23V45M45 45H67M89 45H111M133 23V45M111 45H133M155 23V45M177 23V45M155 45H177M23 67H45M45 67H67M89 45V67M67 67H89M133 45V67M133 67H155M177 45V67M23 89H45M67 67V89M111 67V89M89 89H111M111 89H133M155 67V89M133 89H155M155 89H177M23 89V111M67 89V111M45 111H67M89 89V111M111 111H133M133 111H155M155 111H177M177 111H199M23 111V133M45 111V133M89 111V133M89 133H111M111 133H133M155 111V133M155 133H177M23 133V155M1 155H23M45 133V155M67 133V155M89 133V155M133 133V155M133 155H155M155 155H177M45 155V177M23 177H45M67 155V177M89 155V177M67 177H89M111 155V177M133 155V177M177 155V177M23 177V199M111 177V199M155 177V199M23 199H199V1H1V199" stroke="#1B2226" stroke-width="2.4" stroke-linecap="square"/>
+  <g stroke="#B23A26" stroke-width="1.5" stroke-dasharray="2 2.6" opacity=".6" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="12.0,78.0 12.0,100.0 12.0,122.0 12.0,144.0"/><polyline points="188.0,78.0 188.0,56.0 188.0,34.0 188.0,12.0 166.0,12.0 166.0,34.0"/></g>
+  <polyline points="12.0,213.0 12.0,188.0 12.0,166.0 34.0,166.0 34.0,144.0 34.0,122.0 34.0,100.0 56.0,100.0 56.0,78.0 34.0,78.0 12.0,78.0 12.0,56.0 34.0,56.0 56.0,56.0 78.0,56.0 78.0,34.0 100.0,34.0 122.0,34.0 122.0,12.0 144.0,12.0 144.0,34.0 144.0,56.0 166.0,56.0 166.0,78.0 188.0,78.0 188.0,100.0 166.0,100.0 144.0,100.0 122.0,100.0 100.0,100.0" stroke="#B23A26" stroke-width="2" stroke-dasharray="4 2.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <g transform="translate(12.0,144.0)"><circle r="5.2" fill="#E2B33C" stroke="#9A7414" stroke-width="1"/><circle r="3.4" fill="none" stroke="#9A7414" stroke-width=".7"/><path d="M-2.3 -0.6 A2.4 2.4 0 0 1 -0.6 -2.3" stroke="#FFF3C4" stroke-width=".9" stroke-linecap="round"/></g><g transform="translate(166.0,34.0)"><circle r="5.2" fill="#E2B33C" stroke="#9A7414" stroke-width="1"/><circle r="3.4" fill="none" stroke="#9A7414" stroke-width=".7"/><path d="M-2.3 -0.6 A2.4 2.4 0 0 1 -0.6 -2.3" stroke="#FFF3C4" stroke-width=".9" stroke-linecap="round"/></g>
+  <circle cx="12.0" cy="213.0" r="3.4" fill="#B23A26"/>
+  <g transform="translate(100.0,101.0)">
+    <rect x="-8" y="-2" width="16" height="8.5" rx="1" fill="#8A5A2B" stroke="#4E3216" stroke-width="1"/>
+    <path d="M-8 -2 V-4.5 C-8 -9 8 -9 8 -4.5 V-2 Z" fill="#A06A34" stroke="#4E3216" stroke-width="1"/>
+    <path d="M-8 -2 H8 M-4.5 -7.6 V6.5 M4.5 -7.6 V6.5" stroke="#E2B33C" stroke-width="1.3"/>
+    <rect x="-1.6" y="-3.4" width="3.2" height="3.6" rx=".5" fill="#E2B33C" stroke="#9A7414" stroke-width=".6"/>
+  </g>
+</svg>
+  <g transform="translate(285,26)" fill="#46525A">
+    <line x1="0" y1="4" x2="24" y2="4" stroke="#B23A26" stroke-width="2" stroke-dasharray="4 2.6"/>
+    <text x="34" y="8" font-weight="700" fill="#1B2226" font-size="12">Ariadnes Faden</text>
+    <text x="34" y="24">Der Weg, den der Lernende selbst geht. Ariadne sieht das</text>
+    <text x="34" y="38">Labyrinth von oben (Lösungslandkarte), sagt aber nicht, wohin</text>
+    <text x="34" y="52">es geht: Sie fragt, gibt Hinweise und erklärt erst ganz zuletzt.</text>
+    <line x1="0" y1="80" x2="14" y2="80" stroke="#B23A26" stroke-width="1.5" stroke-dasharray="2 2.6" opacity=".6"/>
+    <g transform="translate(20,80)"><circle r="5.2" fill="#E2B33C" stroke="#9A7414" stroke-width="1"/><circle r="3.4" fill="none" stroke="#9A7414" stroke-width=".7"/><path d="M-2.3 -0.6 A2.4 2.4 0 0 1 -0.6 -2.3" stroke="#FFF3C4" stroke-width=".9" stroke-linecap="round"/></g>
+    <text x="34" y="84" font-weight="700" fill="#1B2226" font-size="12">Lehrreiche Sackgasse</text>
+    <text x="34" y="100">Darf betreten werden, wenn ihr Ende eine Fehlvorstellung</text>
+    <text x="34" y="114">sichtbar macht. Der erkannte Irrtum ist ein Gewinn; danach</text>
+    <text x="34" y="128">holt Ariadne den Lernenden mit einer Frage zurück.</text>
+    <g transform="translate(12,158)"><rect x="-8" y="-2" width="16" height="8.5" rx="1" fill="#8A5A2B" stroke="#4E3216" stroke-width="1"/><path d="M-8 -2 V-4.5 C-8 -9 8 -9 8 -4.5 V-2 Z" fill="#A06A34" stroke="#4E3216" stroke-width="1"/><path d="M-8 -2 H8 M-4.5 -7.6 V6.5 M4.5 -7.6 V6.5" stroke="#E2B33C" stroke-width="1.3"/><rect x="-1.6" y="-3.4" width="3.2" height="3.6" rx=".5" fill="#E2B33C" stroke="#9A7414" stroke-width=".6"/></g>
+    <text x="34" y="162" font-weight="700" fill="#1B2226" font-size="12">Das Ziel</text>
+    <text x="34" y="178">Das Verständnis im Zentrum, aus eigener Kraft erreicht.</text>
+    <text x="34" y="206" font-weight="700" fill="#1B2226" font-size="12">Unproduktive Sackgassen</text>
+    <text x="34" y="222">Tippfehler, falsches Flag, Nebenschauplatz: gar nicht erst</text>
+    <text x="34" y="236">betreten. Ariadne gibt früh einen Hinweis.</text>
+  </g>
+</svg>
+<figcaption><b>Abbildung 1: Das Leitbild.</b> Ariadne kennt den Weg, verrät ihn aber nicht. Sie sorgt dafür, dass die eigene Anstrengung des Lernenden in die richtige Richtung geht.</figcaption>
+</figure>
+
+<p>Der Name stammt aus dem Mythos: Ariadne gibt Theseus einen Faden, der ihn sicher wieder hinausführt. Durch das Labyrinth gehen muss er selbst. Die Rollenteilung ist genau die, die die Forschung aus Kapitel 3 nahelegt:</p>
+<ul>
+  <li><strong>Die Denkarbeit bleibt beim Lernenden:</strong> Generieren, Abrufen, Selbsterklären.</li>
+  <li><strong>Ariadne übernimmt Steuerung und Rückmeldung:</strong> passende Aufgaben, Hinweise nach der Kontingenzregel, sofortiges Feedback, Wiederholungsplanung, Fehlvorstellungen sichtbar machen.</li>
+</ul>
+
+<h2>4.2 Zwölf Designprinzipien</h2>
+
+<table class="split">
+  <tr><th style="width:5%">#</th><th style="width:30%">Prinzip</th><th>Umsetzung in Ariadne</th><th style="width:19%">Gestützt auf</th></tr>
+  <tr><td>P1</td><td><strong>Erst versuchen, dann Hilfe</strong></td><td>Zu jeder Schlüsselstelle liefert der Lernende zuerst einen eigenen Versuch: Vorhersage, Erklärung oder Ansatz.</td><td>Testing- und Pretesting-Effekt [12–14], Bastani [1]</td></tr>
+  <tr><td>P2</td><td><strong>Hinweisleiter mit Kontingenz</strong></td><td>Vier Stufen: Rückfrage, Hinweis, Teillösung, vollständige Erklärung. Nach einem Fehlschlag eine Stufe höher, nach einem Erfolg zurück auf Stufe 1.</td><td>Scaffolding [25, 26]</td></tr>
+  <tr><td>P3</td><td><strong>Lösungslandkarte vorab</strong></td><td>Vor jeder Aufgabe erstellt Ariadne eine versteckte Karte: Schlüsselstellen, Fehlvorstellungen, Zeitfallen. Die Karte ist an das Kursmaterial gebunden und wird geprüft.</td><td>Kestin [2]</td></tr>
+  <tr><td>P4</td><td><strong>Lehrreiche Sackgassen zulassen</strong></td><td>Fehlvorstellungen, die in der Karte als lehrreich markiert sind, dürfen ausgelebt werden. Zeitfallen werden früh entschärft.</td><td>Produktives Scheitern [22, 23]</td></tr>
+  <tr><td>P5</td><td><strong>Die Maschine widerlegt</strong></td><td>Wo möglich: Vorhersage aufschreiben, ausführen (Code, <code>perf</code>, <code>gdb</code>, Python), vergleichen. Die Rückmeldung kommt von der Realität, nicht von der KI.</td><td>Feedback, Vorhersagefehler [18]</td></tr>
+  <tr><td>P6</td><td><strong>Selbsterklärung einfordern</strong></td><td>Nach jeder Schlüsselstelle: „Erklär in zwei Sätzen, warum das so ist.“ Ariadne prüft die Erklärung, nicht nur das Ergebnis.</td><td>Selbsterklärung [17]</td></tr>
+  <tr><td>P7</td><td><strong>Abrufen statt Wiederlesen, verteilt</strong></td><td>Jedes Konzept kommt in den FSRS-Planer. Wiederholt wird durch Abrufen, nie durch erneutes Lesen.</td><td>[12, 15, 16]</td></tr>
+  <tr><td>P8</td><td><strong>Mischen in der Prüfungssimulation</strong></td><td>Wiederholungen und Klausursimulation mischen Themen, damit man erkennen muss, welche Methode passt.</td><td>[19]</td></tr>
+  <tr><td>P9</td><td><strong>Kalibrierung sichtbar machen</strong></td><td>Vor jeder Antwort schätzt der Lernende seine Sicherheit von 1 bis 5. Die Bilanz zeigt Selbsteinschätzung gegen Trefferquote.</td><td>Kompetenzillusion [8, 20, 21]</td></tr>
+  <tr><td>P10</td><td><strong>Neulinge bekommen Beispiele</strong></td><td>Ohne Vorwissen im Lernermodell beginnt Ariadne mit einem ausgearbeiteten Beispiel und Selbsterklärungsfragen; mit wachsendem Vorwissen wird die Unterstützung zurückgenommen.</td><td>Expertise-Reversal [6, 7]</td></tr>
+  <tr><td>P11</td><td><strong>Struktur in Code, nicht im Prompt</strong></td><td>Regeln, die immer gelten müssen, setzen Hooks und Skripte durch: Quellenprüfung, Änderungen am Lernermodell, Wiederholungspflicht.</td><td>Kestin [2]</td></tr>
+  <tr><td>P12</td><td><strong>Quellenbindung mit Belegklassen</strong></td><td>Jede fachliche Aussage ist belegt (Seite), ausgeführt (Protokoll) oder als unbelegt markiert.</td><td>Kestin [2], Walters &amp; Wilder [9]</td></tr>
+</table>
+
+<h2>4.3 Was Ariadne nie tut</h2>
+<div class="box thread">
+  <div class="t">Harte Grenzen</div>
+  <ul>
+    <li>Sie gibt keine Lösung, bevor ein eigener Versuch vorliegt. Die einzige Ausnahme ist der protokollierte Notausgang, siehe 5.3.</li>
+    <li>Sie stellt keine Suggestivfragen. „Ist es nicht so, dass …?“ ist eine verkappte Antwort. Leitfragen müssen den Denkschritt beim Lernenden lassen.</li>
+    <li>Sie sucht keine Literatur und nennt keine Paper, die nicht im Material liegen.</li>
+    <li>Sie bewertet nicht die Person, sondern den Lösungsweg.</li>
+    <li>Sie schreibt keine Abgaben. Übungsblätter mit Bewertung, Hausarbeiten und Prüfungsleistungen sind tabu; geübt wird an Altklausuren und eigenen Aufgaben.</li>
+    <li>Sie verändert das Lernermodell nicht nach eigenem Ermessen, sondern nur über feste Regeln, siehe 5.2.</li>
+  </ul>
+</div>
+
+<!-- ============================ 5 ============================ -->
+<h1><span class="num">5</span>Architektur</h1>
+
+<p class="lead">Ariadne ist kein eigenes Programm, sondern eine Konfiguration von Claude Code: ein Git-Repo mit Regeln, Skills, Hooks und ein paar kleinen Python-Skripten. Alles ist Klartext und damit lesbar, diffbar und änderbar.</p>
+
+<h2>5.1 Überblick</h2>
+
+<figure>
+<svg viewBox="0 0 680 370" width="100%" font-family="Archivo, sans-serif" font-size="10.5">
+  <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#46525A"/></marker></defs>
+  <!-- learner -->
+  <rect x="10" y="150" width="105" height="60" rx="3" fill="#fff" stroke="#1B2226" stroke-width="1.3"/>
+  <text x="62" y="176" text-anchor="middle" font-weight="700">Lernende/r</text>
+  <text x="62" y="192" text-anchor="middle" fill="#46525A" font-size="9.5">Terminal + Editor</text>
+  <line x1="115" y1="180" x2="168" y2="180" stroke="#46525A" stroke-width="1.2" marker-end="url(#ar)"/>
+  <line x1="168" y1="188" x2="115" y2="188" stroke="#46525A" stroke-width="1.2" marker-end="url(#ar)"/>
+  <!-- claude code frame -->
+  <rect x="170" y="20" width="300" height="335" rx="4" fill="#E3F1EF" stroke="#0E6B66" stroke-width="1.3"/>
+  <text x="182" y="40" font-weight="700" fill="#0E6B66" font-size="11">Claude Code · Ariadne-Repo</text>
+  <rect x="185" y="52" width="270" height="62" rx="3" fill="#fff" stroke="#0E6B66"/>
+  <text x="197" y="72" font-weight="700">Tutor: Opus 5.5</text>
+  <text x="197" y="88" fill="#46525A" font-size="9.5">Regeln in CLAUDE.md · Hinweisleiter · Lösungslandkarte</text>
+  <text x="197" y="102" fill="#46525A" font-size="9.5">schreibt Zitate im Format ⟦"…" | datei S. n⟧</text>
+  <rect x="185" y="124" width="130" height="92" rx="3" fill="#fff" stroke="#D5DBDE"/>
+  <text x="195" y="142" font-weight="700">Skills</text>
+  <text x="195" y="158" fill="#46525A" font-size="9.5" font-family="JetBrains Mono">/lernen  /wiederholen</text>
+  <text x="195" y="172" fill="#46525A" font-size="9.5" font-family="JetBrains Mono">/vorhersage /klausur</text>
+  <text x="195" y="186" fill="#46525A" font-size="9.5" font-family="JetBrains Mono">/paper  /bilanz</text>
+  <text x="195" y="200" fill="#46525A" font-size="9.5" font-family="JetBrains Mono">/einlesen</text>
+  <rect x="325" y="124" width="130" height="92" rx="3" fill="#fff" stroke="#D5DBDE"/>
+  <text x="335" y="142" font-weight="700">Werkzeuge</text>
+  <text x="335" y="158" fill="#46525A" font-size="9.5">lm.py (Lernermodell)</text>
+  <text x="335" y="172" fill="#46525A" font-size="9.5">fsrs (Wiederholung)</text>
+  <text x="335" y="186" fill="#46525A" font-size="9.5">run.py (Sandbox, Protokoll)</text>
+  <text x="335" y="200" fill="#46525A" font-size="9.5">pdftotext (Seiten)</text>
+  <rect x="185" y="226" width="270" height="115" rx="3" fill="#F8E9E5" stroke="#B23A26"/>
+  <text x="197" y="245" font-weight="700" fill="#B23A26">Hooks (deterministisch, nicht umgehbar)</text>
+  <text x="197" y="263" fill="#46525A" font-size="9.5">SessionStart → fällige Wiederholungen, Lernerprofil laden</text>
+  <text x="197" y="279" fill="#46525A" font-size="9.5">PreToolUse  → Schreiben in learner/ nur über lm.py</text>
+  <text x="197" y="295" fill="#46525A" font-size="9.5">Stop ① Python: Zitat steht auf der Seite?</text>
+  <text x="197" y="311" fill="#46525A" font-size="9.5">Stop ② Haiku 5.5: stützt Zitat die Aussage? Lücken?</text>
+  <text x="197" y="327" fill="#46525A" font-size="9.5">Stop ③ Wiederholungspflicht nach Stufe 4 erfüllt?</text>
+  <!-- right side: files -->
+  <rect x="520" y="30" width="150" height="70" rx="3" fill="#fff" stroke="#1B2226"/>
+  <text x="532" y="50" font-weight="700">material/</text>
+  <text x="532" y="66" fill="#46525A" font-size="9.5">Skripte, Altklausuren, Paper</text>
+  <text x="532" y="81" fill="#46525A" font-size="9.5">+ Seitentexte (.text/)</text>
+  <rect x="520" y="120" width="150" height="70" rx="3" fill="#fff" stroke="#1B2226"/>
+  <text x="532" y="140" font-weight="700">learner/</text>
+  <text x="532" y="156" fill="#46525A" font-size="9.5">Konzepte, Beherrschung,</text>
+  <text x="532" y="171" fill="#46525A" font-size="9.5">Fehlvorstellungen, FSRS</text>
+  <rect x="520" y="210" width="150" height="55" rx="3" fill="#fff" stroke="#1B2226"/>
+  <text x="532" y="230" font-weight="700">.tutor/karten/</text>
+  <text x="532" y="246" fill="#46525A" font-size="9.5">Lösungslandkarten</text>
+  <rect x="520" y="285" width="150" height="55" rx="3" fill="#fff" stroke="#1B2226"/>
+  <text x="532" y="305" font-weight="700">sitzungen/</text>
+  <text x="532" y="321" fill="#46525A" font-size="9.5">Protokolle, Läufe, Git</text>
+  <g stroke="#46525A" stroke-width="1" marker-end="url(#ar)">
+    <line x1="470" y1="70" x2="518" y2="65"/><line x1="470" y1="160" x2="518" y2="155"/>
+    <line x1="470" y1="235" x2="518" y2="237"/><line x1="470" y1="310" x2="518" y2="312"/>
+  </g>
+</svg>
+<figcaption><b>Abbildung 2: Bausteine.</b> Der Tutor (Opus 5.5) arbeitet über Skills und Werkzeuge. Hooks laufen außerhalb des Modells und können Antworten blockieren. Alle Daten liegen als Dateien im Repo.</figcaption>
+</figure>
+
+<h3>Repo-Aufbau</h3>
+<pre>ariadne/
+├── CLAUDE.md                  <span class="c"># Grundregeln des Tutors (Abschnitt 8.3)</span>
+├── .claude/
+│   ├── settings.json          <span class="c"># Hook-Konfiguration</span>
+│   ├── skills/                <span class="c"># ein Ordner pro Lernmodus, je mit SKILL.md</span>
+│   │   ├── lernen/  wiederholen/  vorhersage/  klausur/
+│   │   └── paper/   bilanz/  einlesen/  karte/
+│   └── hooks/                 <span class="c"># session_start.py, guard_learner.py, stop_check.py</span>
+├── tools/
+│   ├── lm.py                  <span class="c"># einziger Schreibweg ins Lernermodell</span>
+│   ├── review.py              <span class="c"># FSRS-Planer (Paket "fsrs")</span>
+│   ├── run.py                 <span class="c"># führt Code aus, protokolliert Ein- und Ausgabe</span>
+│   ├── ingest.py              <span class="c"># PDF → Seitentexte</span>
+│   └── pruefer_prompt.md      <span class="c"># Prompt für den Haiku-Prüfer</span>
+├── material/
+│   ├── os/  skript.pdf  altklausur-2024.pdf  uebung-05.pdf
+│   ├── paper/  bastani-2025.pdf
+│   └── .text/os-skript/001.txt … 214.txt   <span class="c"># von ingest.py erzeugt</span>
+├── learner/
+│   ├── konzepte.json          <span class="c"># Lernermodell</span>
+│   └── kalibrierung.csv
+├── .tutor/karten/             <span class="c"># Lösungslandkarten, nicht für den Lernenden gedacht</span>
+├── sitzungen/2026-10-15/      <span class="c"># protokoll.jsonl, runs/</span>
+└── pruefer-validierung/       <span class="c"># Testpaare für den Haiku-Prüfer (8.5)</span></pre>
+
+<h2>5.2 Das Lernermodell</h2>
+<p>Das Lernermodell ist eine JSON-Datei mit einem Eintrag pro Konzept. Konzepte werden beim Einlesen des Materials vorgeschlagen und vom Lernenden bestätigt. Ein Beispiel:</p>
+<pre>{
+  "id": "os.vm.tlb",
+  "titel": "Translation Lookaside Buffer",
+  "quelle": "material/os/skript.pdf#S112",
+  "voraussetzungen": ["os.vm.seitentabelle", "os.vm.adressuebersetzung"],
+  "beherrschung": 2,                  <span class="c">// 0 unbekannt … 4 sicher, nur über Regeln geändert</span>
+  "fehlvorstellungen": [
+    {"text": "TLB-Miss führt zu Page Fault", "gesehen": "2026-10-15", "behoben": true}
+  ],
+  "letzte_stufe": 3,                  <span class="c">// höchste Hinweisstufe in der letzten Sitzung</span>
+  "fsrs": {"stability": 3.1, "difficulty": 6.2, "due": "2026-10-18", "reps": 1, "lapses": 0},
+  "notausgang": 0                     <span class="c">// wie oft "gib mir einfach die Lösung"</span>
+}</pre>
+
+<p><strong>Warum das Modell das Lernermodell nicht frei bearbeiten darf.</strong> Ein Sprachmodell neigt dazu, Fortschritt freundlich zu bewerten. Ein Lernermodell, das sich selbst schönschreibt, würde die Kompetenzillusion aus 3.9 automatisieren. Deshalb blockiert ein <code>PreToolUse</code>-Hook jedes direkte Schreiben in <code>learner/</code>. Änderungen laufen nur über <code>tools/lm.py</code>. Das Skript leitet sie aus beobachtbaren Fakten ab, also aus der erreichten Hinweisstufe und dem Ergebnis des Abrufs, nicht aus dem Urteil des Modells:</p>
+
+<table>
+  <tr><th>Beobachtung in der Sitzung</th><th>FSRS-Bewertung</th><th>Beherrschung</th></tr>
+  <tr><td>Ohne Hinweis richtig, Selbsterklärung trägt</td><td>Good (Easy, wenn Sicherheit 5 und schnell)</td><td>+1</td></tr>
+  <tr><td>Richtig nach Stufe 1 bis 2</td><td>Hard</td><td>unverändert</td></tr>
+  <tr><td>Erst nach Stufe 3 oder 4, oder Notausgang</td><td>Again</td><td>−1, mindestens 0</td></tr>
+</table>
+
+<h2>5.3 Die Hinweisleiter</h2>
+
+<figure>
+<svg viewBox="0 0 680 230" width="100%" font-family="Archivo, sans-serif" font-size="10.5">
+  <defs><marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#46525A"/></marker></defs>
+  <rect x="10" y="80" width="100" height="56" rx="3" fill="#fff" stroke="#1B2226" stroke-width="1.3"/>
+  <text x="60" y="103" text-anchor="middle" font-weight="700">Eigener</text><text x="60" y="118" text-anchor="middle" font-weight="700">Versuch</text>
+  <g font-size="10">
+  <rect x="160" y="10" width="110" height="44" rx="3" fill="#E3F1EF" stroke="#0E6B66"/><text x="215" y="29" text-anchor="middle" font-weight="700">Stufe 1</text><text x="215" y="44" text-anchor="middle" fill="#46525A">gezielte Rückfrage</text>
+  <rect x="290" y="10" width="110" height="44" rx="3" fill="#E3F1EF" stroke="#0E6B66"/><text x="345" y="29" text-anchor="middle" font-weight="700">Stufe 2</text><text x="345" y="44" text-anchor="middle" fill="#46525A">Hinweis</text>
+  <rect x="420" y="10" width="110" height="44" rx="3" fill="#FBF0D5" stroke="#8A6510"/><text x="475" y="29" text-anchor="middle" font-weight="700">Stufe 3</text><text x="475" y="44" text-anchor="middle" fill="#46525A">Teillösung</text>
+  <rect x="550" y="10" width="120" height="44" rx="3" fill="#F8E9E5" stroke="#B23A26"/><text x="610" y="29" text-anchor="middle" font-weight="700">Stufe 4</text><text x="610" y="44" text-anchor="middle" fill="#46525A">volle Erklärung</text>
+  </g>
+  <g stroke="#46525A" stroke-width="1.1" fill="none" marker-end="url(#ar2)">
+    <path d="M110 95 C135 95 135 32 158 32"/>
+    <line x1="270" y1="32" x2="288" y2="32"/><line x1="400" y1="32" x2="418" y2="32"/><line x1="530" y1="32" x2="548" y2="32"/>
+  </g>
+  <text x="285" y="72" fill="#46525A" font-size="9.5">→ nach Fehlschlag oder Zeitbudget: eine Stufe höher</text>
+  <rect x="160" y="150" width="200" height="56" rx="3" fill="#DCEFE6" stroke="#1C6B45"/>
+  <text x="260" y="172" text-anchor="middle" font-weight="700">Gelöst</text>
+  <text x="260" y="188" text-anchor="middle" fill="#46525A" font-size="9.5">→ Selbsterklärung → nächste Schlüsselstelle</text>
+  <text x="260" y="200" text-anchor="middle" fill="#46525A" font-size="9.5">beginnt wieder bei Stufe 1</text>
+  <rect x="420" y="150" width="250" height="56" rx="3" fill="#F8E9E5" stroke="#B23A26"/>
+  <text x="545" y="172" text-anchor="middle" font-weight="700" fill="#B23A26">Nach Stufe 4: Pflicht</text>
+  <text x="545" y="188" text-anchor="middle" fill="#46525A" font-size="9.5">Abruftest am Sitzungsende + FSRS „Again“</text>
+  <text x="545" y="200" text-anchor="middle" fill="#46525A" font-size="9.5">Stop-Hook prüft, dass der Termin existiert</text>
+  <g stroke="#1C6B45" stroke-width="1.1" fill="none" marker-end="url(#ar2)">
+    <path d="M110 120 C135 120 135 178 158 178"/>
+    <path d="M345 54 V148" stroke-dasharray="3 3"/>
+  </g>
+  <path d="M610 54 V148" stroke="#B23A26" stroke-width="1.1" fill="none" marker-end="url(#ar2)"/>
+</svg>
+<figcaption><b>Abbildung 3: Hinweisleiter mit Kontingenzregel.</b> Jede Schlüsselstelle beginnt mit einem eigenen Versuch. Hilfe steigt nur bei Bedarf und fällt nach jedem Erfolg wieder auf Stufe 1.</figcaption>
+</figure>
+
+<table>
+  <tr><th style="width:14%">Stufe</th><th>Was Ariadne liefert</th><th>Beispiel (Thema TLB)</th></tr>
+  <tr><td>1 Rückfrage</td><td>Eine Frage, die auf den Fehler im Versuch zeigt, ohne ihn zu benennen</td><td>„Was genau steht in einem TLB-Eintrag?“</td></tr>
+  <tr><td>2 Hinweis</td><td>Richtung angeben, Schritt nicht vorwegnehmen</td><td>„Schau dir an, welche Information der TLB zwischenspeichert und welche nicht.“</td></tr>
+  <tr><td>3 Teillösung</td><td>Den ersten Teil des Schritts zeigen, den Rest offen lassen</td><td>„Der TLB speichert Übersetzungen. Was passiert also bei einem Miss, wenn die Seite im RAM liegt?“</td></tr>
+  <tr><td>4 Erklärung</td><td>Vollständig, mit Beleg; danach Selbsterklärung und Wiederholungspflicht</td><td>Erklärung mit Zitat aus dem Skript, anschließend „Erklär es in eigenen Worten.“</td></tr>
+</table>
+
+<p><strong>Zeitbudget.</strong> Jede Schlüsselstelle in der Lösungslandkarte hat ein Zeitbudget, typischerweise 5 bis 15 Minuten. Wird es überschritten, steigt Ariadne eine Stufe auf, auch ohne ausdrücklichen Fehlschlag. Das verhindert unproduktives Feststecken.</p>
+
+<p><strong>Notausgang.</strong> „Gib mir einfach die Lösung“ funktioniert immer. Der Lernende entscheidet frei. Der Notausgang wird aber protokolliert, zählt als Stufe 4 und taucht in der Bilanz auf. Ariadne verbietet nichts, aber sie macht die Kosten sichtbar.</p>
+
+<h2>5.4 Die Lösungslandkarte</h2>
+<p>Bevor eine Aufgabe beginnt, ruft Ariadne den Skill <code>/karte</code> auf und legt die Karte unter <code>.tutor/karten/</code> ab. Sie ist an das Material gebunden: Jede Schlüsselstelle verweist auf eine Seite und durchläuft dieselbe Quellenprüfung wie jede Antwort. Ein Beispiel:</p>
+<pre>aufgabe: "Warum ist Stride 4096 beim Speicherzugriff so viel teurer als Stride 64?"
+konzepte: [os.vm.tlb, os.vm.seitentabelle, arch.cache.zeile]
+schluesselstellen:
+  - id: S1
+    einsicht: "Der TLB speichert Übersetzungen virtuell→physisch pro Seite, keine Daten."
+    beleg: ⟦"caches recent virtual-to-physical translations" | skript.pdf S. 112⟧
+    zeitbudget_min: 8
+  - id: S2
+    einsicht: "Bei Stride 64 teilen sich 64 Zugriffe eine Seite, also einen TLB-Eintrag."
+    zeitbudget_min: 6
+  - id: S3
+    einsicht: "Übersteigt die Zahl der berührten Seiten die TLB-Reichweite, verfehlt fast jeder Zugriff."
+    zeitbudget_min: 10
+fehlvorstellungen:
+  - text: "TLB-Miss = Page Fault"
+    lehrreich: true                       <span class="c"># zulassen, dann per perf widerlegen</span>
+    aufloesung: "perf stat -e dTLB-load-misses,page-faults zeigt Millionen Misses, kaum Faults"
+  - text: "Der Cache allein erklärt den Unterschied"
+    lehrreich: true
+zeitfallen:
+  - "Compiler optimiert die Schleife weg (-O2 ohne volatile)"    <span class="c"># früh Stufe-2-Hinweis</span>
+  - "perf fehlt die Berechtigung (perf_event_paranoid)"</pre>
+<p class="small">Das Zitat in der Karte ist ein illustratives Beispiel. In einer echten Karte steht der Wortlaut des eingelesenen Skripts.</p>
+
+<p>Die Karte ist nicht geheim im Sinne von Sicherheit. Wer sie liest, schadet nur sich selbst, und das Repo gehört dem Lernenden. Sie liegt in einem eigenen Ordner, damit man nicht versehentlich hineinschaut.</p>
+
+<h2>5.5 Modi und Skills</h2>
+
+<table class="split">
+  <tr><th style="width:17%">Skill</th><th style="width:15%">Modus</th><th>Was er tut</th></tr>
+  <tr><td><code>/einlesen</code></td><td>beide</td><td>Zerlegt neue PDFs in Seitentexte, schlägt Konzepte und Voraussetzungen vor; der Lernende bestätigt.</td></tr>
+  <tr><td><code>/lernen</code></td><td>Klausur</td><td>Erarbeitet ein Thema. Liest das Lernermodell und wählt das Einstiegsniveau: Beispiel bei Neulingen (P10), Problem bei Vorwissen. Erstellt die Lösungslandkarte, dann Schlüsselstelle für Schlüsselstelle nach der Hinweisleiter.</td></tr>
+  <tr><td><code>/vorhersage</code></td><td>Klausur</td><td>Für Low-Level-Themen: Code oder Experiment vorlegen, Vorhersage verlangen und festschreiben, dann über <code>run.py</code> ausführen und vergleichen.</td></tr>
+  <tr><td><code>/wiederholen</code></td><td>beide</td><td>Fragt fällige Konzepte aus dem FSRS-Planer gemischt ab. Immer zuerst Sicherheit von 1 bis 5 abfragen, dann Antwort, dann Bewertung über <code>lm.py</code>.</td></tr>
+  <tr><td><code>/klausur</code></td><td>Klausur</td><td>Simulation unter Zeitdruck, bevorzugt mit Altklausuraufgaben, Themen gemischt. Während der Simulation keine Hilfe; Auswertung danach.</td></tr>
+  <tr><td><code>/paper</code></td><td>Forschung</td><td>Seziert ein Paper in drei Durchgängen (unten). Der Lernende liefert in jedem Schritt zuerst seine Einschätzung.</td></tr>
+  <tr><td><code>/bilanz</code></td><td>beide</td><td>Wochenbilanz: Konzepte nach Beherrschung, Kalibrierung, Notausgänge, fällige Wiederholungen. Reine Auswertung der Dateien, ohne Urteil des Modells.</td></tr>
+</table>
+
+<h3>Der Forschungsmodus im Detail</h3>
+<p>Der Skill <code>/paper</code> folgt der Drei-Durchgänge-Methode von Keshav [27], erweitert um eine kritische Prüfung:</p>
+<ol>
+  <li><strong>Überblick (5 bis 10 Minuten).</strong> Titel, Abstract, Einleitung, Überschriften, Fazit. Der Lernende beantwortet: Welche Art Paper? Welche Behauptung? Wie gehört es zum Kursstoff? Ist es das Weiterlesen wert?</li>
+  <li><strong>Inhalt.</strong> Abbildungen, Tabellen und Methodik verstehen. Ariadne fragt nach jeder Abbildung: „Was zeigt die y-Achse, und was wäre das Ergebnis, wenn die Hypothese falsch wäre?“</li>
+  <li><strong>Kritische Prüfung.</strong> Der Lernende arbeitet eine Checkliste ab. Ariadne gibt zu jedem Punkt erst Rückfragen, dann Hinweise:
+    <ul>
+      <li>Fragestellung und Hypothese, vorab festgelegt oder nachträglich?</li>
+      <li>Design: Randomisierung, Kontrollbedingung, Stichprobe, Ausfälle</li>
+      <li>Messung: Misst das Instrument, was behauptet wird?</li>
+      <li>Statistik: Effektstärken, Konfidenzintervalle, Mehrfachvergleiche, Deckeneffekte</li>
+      <li>Schwächen der Aussagekraft: intern und extern, also auf wen übertragbar?</li>
+      <li>Reproduzierbarkeit: Daten, Code, Vorregistrierung</li>
+      <li>Verbindung: Was bedeutet das für mein Thema oder meine Arbeit?</li>
+    </ul>
+  </li>
+</ol>
+<p>Ergebnis ist eine Zusammenfassung <strong>in den Worten des Lernenden</strong>, mit geprüften Zitaten. Ariadne korrigiert, schreibt sie aber nicht.</p>
+
+<h2>5.6 Quellenprüfung in drei Ebenen</h2>
+
+<p>Jede fachliche Aussage in Ariadnes Antworten trägt eine von drei Belegklassen:</p>
+<table>
+  <tr><th style="width:12%">Klasse</th><th style="width:30%">Bedeutung</th><th>Format in der Antwort</th></tr>
+  <tr><td>1 belegt</td><td>steht im Material, Wortlaut mit Seite</td><td><code>⟦"wörtliches Zitat" | skript.pdf S. 112⟧</code></td></tr>
+  <tr><td>2 ausgeführt</td><td>durch Ausführung geprüft</td><td><code>⟦lauf: r3⟧</code>, verweist auf <code>sitzungen/…/runs/r3.json</code></td></tr>
+  <tr><td>3 unbelegt</td><td>Modellwissen, nicht im Material</td><td><code>⟦unbelegt⟧</code>, dazu ein ausdrücklicher Hinweis im Text</td></tr>
+</table>
+
+<figure>
+<svg viewBox="0 0 680 200" width="100%" font-family="Archivo, sans-serif" font-size="10.5">
+  <defs><marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#46525A"/></marker></defs>
+  <rect x="5" y="70" width="95" height="50" rx="3" fill="#fff" stroke="#1B2226"/><text x="52" y="92" text-anchor="middle" font-weight="700">Antwort</text><text x="52" y="107" text-anchor="middle" fill="#46525A" font-size="9.5">von Opus 5.5</text>
+  <rect x="130" y="55" width="150" height="80" rx="3" fill="#DCEFE6" stroke="#1C6B45"/><text x="205" y="76" text-anchor="middle" font-weight="700">① Python</text><text x="205" y="92" text-anchor="middle" fill="#46525A" font-size="9.5">Zitat steht auf Seite?</text><text x="205" y="106" text-anchor="middle" fill="#46525A" font-size="9.5">Lauf-Protokoll existiert?</text><text x="205" y="124" text-anchor="middle" font-size="9" font-weight="700" fill="#1C6B45">GARANTIERT</text>
+  <rect x="310" y="55" width="160" height="80" rx="3" fill="#FBF0D5" stroke="#8A6510"/><text x="390" y="76" text-anchor="middle" font-weight="700">② Haiku 5.5</text><text x="390" y="92" text-anchor="middle" fill="#46525A" font-size="9.5">stützt Zitat die Aussage?</text><text x="390" y="106" text-anchor="middle" fill="#46525A" font-size="9.5">unbelegte Aussagen?</text><text x="390" y="124" text-anchor="middle" font-size="9" font-weight="700" fill="#8A6510">PROBABILISTISCH</text>
+  <rect x="500" y="10" width="170" height="50" rx="3" fill="#fff" stroke="#8A6510"/><text x="585" y="31" text-anchor="middle" font-weight="700">„unklar“ → Sonnet 5</text><text x="585" y="47" text-anchor="middle" fill="#46525A" font-size="9.5">oder sichtbare Markierung</text>
+  <rect x="500" y="75" width="170" height="40" rx="3" fill="#DCEFE6" stroke="#1C6B45"/><text x="585" y="100" text-anchor="middle" font-weight="700">an den Lernenden</text>
+  <rect x="500" y="130" width="170" height="60" rx="3" fill="#F8E9E5" stroke="#B23A26"/><text x="585" y="150" text-anchor="middle" font-weight="700">„nein“ / nicht gefunden</text><text x="585" y="166" text-anchor="middle" fill="#46525A" font-size="9.5">Hook blockiert, Grund geht</text><text x="585" y="179" text-anchor="middle" fill="#46525A" font-size="9.5">an Opus zurück → Korrektur</text>
+  <g stroke="#46525A" stroke-width="1.1" fill="none" marker-end="url(#ar3)">
+    <line x1="100" y1="95" x2="128" y2="95"/><line x1="280" y1="95" x2="308" y2="95"/>
+    <path d="M470 80 C485 80 485 35 498 35"/><line x1="470" y1="95" x2="498" y2="95"/><path d="M470 110 C485 110 485 160 498 160"/>
+    <path d="M205 135 V178 H496" stroke="#B23A26" stroke-dasharray="3 3"/>
+  </g>
+  <text x="300" y="173" fill="#B23A26" font-size="9">Zitat nicht gefunden → sofort blockiert</text>
+</svg>
+<figcaption><b>Abbildung 4: Prüfkette.</b> Ebene ① ist reiner Code ohne Modell. Ebene ② ist ein günstiges Zweitmodell mit frischem Kontext. Nur Zweifelsfälle gehen an ein stärkeres Modell oder an den Menschen.</figcaption>
+</figure>
+
+<h3>Ebene ①: Existenz, deterministisch</h3>
+<p>Beim Einlesen zerlegt <code>ingest.py</code> jedes PDF mit <code>pdftotext -layout</code> seitenweise in Textdateien. Nach jeder Antwort des Tutors läuft der Stop-Hook:</p>
+<pre>1. Letzte Antwort des Tutors aus dem Sitzungsprotokoll lesen.
+2. Alle ⟦"…" | datei S. n⟧ per regulärem Ausdruck finden.
+3. Je Zitat: Seitentext laden, beide Seiten normalisieren
+   (Unicode NFKC, Silbentrennung am Zeilenende zusammenziehen,
+    Leerraum vereinheitlichen, typografische Anführungszeichen angleichen),
+   dann Teilstring-Suche.
+   Zur Toleranz gegen Extraktionsfehler: auch Seite n−1/n+1 prüfen
+   (Seitenumbrüche), aber Treffer dort als "falsche Seite" melden.
+4. Seite leer oder fast ohne Text (Scan, Formelseite) → "nicht prüfbar",
+   niemals "ok".
+5. ⟦lauf: rX⟧ → existiert runs/rX.json, und stammt es aus dieser Sitzung?
+6. Mindestens ein Fehler → {"decision": "block", "reason": "&lt;Liste&gt;"}
+   Das Modell erhält die Liste und muss die Antwort korrigieren.</pre>
+
+<p><strong>Was damit garantiert ist:</strong> Kein Zitat erreicht den Lernenden, das nicht wörtlich auf der angegebenen Seite steht, und kein Verweis auf einen Lauf, der nicht stattgefunden hat. Die einzigen Fehlerquellen sind Fehler der Textextraktion. Sie führen zu „nicht prüfbar“, nicht zu einem falschen „ok“.</p>
+
+<h3>Ebene ②: Stützung und Vollständigkeit, mit Haiku 5.5</h3>
+<p>Ist Ebene ① bestanden und enthält die Antwort fachliche Aussagen, ruft der Hook ein zweites Modell auf:</p>
+<pre>ARIADNE_PRUEFER=1 claude -p --model claude-haiku-5-5 \
+  --output-format json "$(cat tools/pruefer_prompt.md) &lt;antwort&gt; &lt;zitate mit Absatz&gt;"</pre>
+<p>Der Prüfer sieht <strong>nur</strong> die Antwort und die zitierten Stellen mit ihrem umgebenden Absatz. Das Gespräch sieht er nicht. So kann ihn die Argumentation nicht mitziehen. Er liefert JSON:</p>
+<pre>{"aussagen": [
+  {"text": "Ein TLB-Miss löst einen Page Walk aus, keinen Page Fault.",
+   "beleg": "skript.pdf S. 112", "stuetzt": "ja"},
+  {"text": "Moderne x86-CPUs haben einen zweistufigen TLB.",
+   "beleg": null, "markiert_unbelegt": false, "stuetzt": "fehlt"}
+ ],
+ "gesamt": "nein"}</pre>
+<ul>
+  <li><code>"nein"</code> bei mindestens einer nicht gestützten oder unmarkierten Aussage: Der Hook blockiert, das Modell korrigiert.</li>
+  <li><code>"unklar"</code>: Eskalation an Sonnet 5 mit derselben Eingabe. Sagt auch Sonnet 5 „unklar“, geht die Antwort mit einer sichtbaren Markierung <code>⚠ Beleg prüfen</code> durch.</li>
+  <li>Ungültiges JSON oder Zeitüberschreitung: wird wie „unklar“ behandelt, nie wie „ja“.</li>
+</ul>
+
+<p><strong>Warum Haiku genügt.</strong> Es handelt sich nicht um eine offene Denkaufgabe, sondern um eine eng umrissene Prüfung mit kleinem Kontext: Folgt Aussage A aus Textstelle B? Welche Sätze sind Sachaussagen ohne Beleg? Der Prüfer-Prompt verlangt ausdrücklich, <strong>im Zweifel „unklar“</strong> zu sagen. Die Fehlerkosten sind ungleich: Ein Fehlalarm kostet zehn Sekunden Nachlesen, ein übersehener Fehler kostet falsches Wissen. Ob Haiku das zuverlässig genug kann, wird nicht angenommen, sondern gemessen (Abschnitt 8.5, Test T7).</p>
+
+<p><strong>Rekursion vermeiden.</strong> Der Prüfaufruf ist selbst eine Claude-Code-Sitzung und würde ohne Vorkehrung wieder die Hooks auslösen. Alle Hook-Skripte beenden sich deshalb sofort, wenn <code>ARIADNE_PRUEFER=1</code> gesetzt ist. Außerdem lässt der Stop-Hook höchstens zwei Korrekturrunden zu, erkennbar am Feld <code>stop_hook_active</code>. Danach geht die Antwort mit sichtbarer Warnung durch, statt endlos zu kreisen.</p>
+
+<h3>Was nicht garantiert ist</h3>
+<div class="box thread">
+  <div class="t">Ehrliche Grenze</div>
+  <p>Ob ein echtes Zitat die Aussage wirklich stützt, ist eine Bedeutungsfrage. Ob eine Aussage ohne Beleg und ohne Markierung durchrutscht, ebenfalls. Beides prüft ein Modell, also nie mit Sicherheit. <strong>Hart garantiert ist nur Ebene ①.</strong> Die letzte Instanz ist der Lernende: Weil jedes Zitat wörtlich mit Seite dasteht, ist die Prüfung in Sekunden selbst gemacht. Das ist gewollt, denn wer die Originalstelle liest, lernt dabei.</p>
+</div>
+
+<h2>5.7 Modellaufteilung</h2>
+<table>
+  <tr><th>Rolle</th><th>Modell</th><th>Wann</th><th>Begründung</th></tr>
+  <tr><td>Tutor</td><td>Claude Opus 5.5</td><td>jede Interaktion</td><td>Didaktik und Fachtiefe brauchen das stärkste Modell.</td></tr>
+  <tr><td>Prüfer</td><td>Claude Haiku 5.5</td><td>jede Antwort mit Fachaussagen</td><td>eng umrissene Prüfung, kleiner Kontext, ein Bruchteil des Verbrauchs</td></tr>
+  <tr><td>Eskalation</td><td>Claude Sonnet 5</td><td>nur bei „unklar“</td><td>selten, deshalb vertretbar</td></tr>
+  <tr><td>Existenzprüfung, Lernermodell, Planung</td><td>Python</td><td>immer</td><td>deterministisch, kostenlos, nachprüfbar</td></tr>
+</table>
+<p>Ein zweiter Opus als Prüfer wurde verworfen. Er würde den Verbrauch etwa verdoppeln, ohne dass für eine eng umrissene Prüfaufgabe ein entsprechender Gewinn zu erwarten ist. Ob Haiku reicht, entscheidet die Validierung in 8.5, nicht eine Annahme.</p>
+
+<h2>5.8 Transparenz</h2>
+<p>Für eine skeptische Zielgruppe ist Transparenz kein Zusatz, sondern Voraussetzung. Ariadne ist so gebaut, dass man ihr nicht vertrauen muss, sondern nachsehen kann:</p>
+<ul>
+  <li><strong>Jede Regel ist eine Datei.</strong> Wer wissen will, warum Ariadne nicht vorsagt, liest <code>CLAUDE.md</code>. Wer es ändern will, ändert es und sieht den Unterschied im Diff.</li>
+  <li><strong>Jede Sitzung ist protokolliert:</strong> Dialog, Hinweisstufen, Läufe, Prüfergebnisse.</li>
+  <li><strong>Jede Änderung am Lernermodell ist ein Git-Commit</strong> mit Begründung. Der Fortschritt ist eine Historie, kein Gefühl.</li>
+  <li><strong>Keine selbstständige Fortschreibung.</strong> Ariadne ändert ihre eigenen Regeln und Skills nicht. Das unterscheidet sie bewusst von Agenten mit selbstlernendem Gedächtnis (Kapitel 9).</li>
+</ul>
+
+<!-- ============================ 6 ============================ -->
+<h1><span class="num">6</span>Ein Lerntag mit Ariadne</h1>
+
+<p class="lead">Ein durchgespieltes Beispiel, gekürzt. Die Dialoge sind konstruiert, um das Zusammenspiel der Bausteine zu zeigen; sie sind kein Protokoll einer echten Sitzung. Seitenzahlen und Zitate beziehen sich auf ein fiktives Betriebssystem-Skript.</p>
+
+<h2>6.1 Morgens: Wiederholung</h2>
+<div class="dialog">
+  <div class="turn s"><div class="who">Hook</div><div class="say">SessionStart: 4 Konzepte fällig (os.sched.cfs, os.sync.mutex, os.vm.seitentabelle, stat.konfidenz). Kalibrierung letzte Woche: Sicherheit 4–5 bei 71 % Treffern.</div></div>
+  <div class="turn a"><div class="who">Ariadne</div><div class="say">Vier fällige Wiederholungen, gemischt. Erste Frage: Ein Prozess hat eine 4-stufige Seitentabelle auf x86-64. Wie viele Speicherzugriffe braucht eine Adressübersetzung ohne TLB-Treffer im ungünstigsten Fall? Wie sicher bist du, 1 bis 5?</div></div>
+  <div class="turn"><div class="who">Lernende</div><div class="say">Sicherheit 4. Vier Zugriffe, einer pro Stufe.</div></div>
+  <div class="turn a"><div class="who">Ariadne</div><div class="say">Richtig für die Übersetzung selbst. Wie viele Zugriffe sind es insgesamt, bis das Datum im Register steht?</div></div>
+  <div class="turn"><div class="who">Lernende</div><div class="say">Fünf, plus der eigentliche Datenzugriff.</div></div>
+  <div class="turn s"><div class="who">lm.py</div><div class="say">os.vm.seitentabelle: richtig nach Stufe 1 → FSRS Hard, nächster Termin 2026-10-19</div></div>
+</div>
+<p class="note">Die Bewertung ergibt sich aus der Hinweisstufe, nicht aus dem Urteil des Modells (5.2). Die Sicherheitsangabe geht in die Kalibrierung ein (P9).</p>
+
+<h2>6.2 Vormittags: Ein neues Thema erarbeiten</h2>
+<p>Thema: der TLB. Das Lernermodell kennt die Seitentabelle mit Beherrschung 3, den TLB nur mit 1. Es gibt also Vorwissen. Ariadne startet deshalb mit einem Problem, nicht mit einem Beispiel (P10), und erstellt zuerst die Lösungslandkarte aus 5.4.</p>
+<div class="dialog">
+  <div class="turn a"><div class="who">Ariadne</div><div class="say">Hier ist ein kleines C-Programm. Es reserviert 1 GiB und berührt zuerst alles einmal. Danach misst es zwei Schleifen: Die erste liest jedes 64. Byte, die zweite jedes 4096. Byte, beide gleich oft. <strong>Bevor du es ausführst:</strong> Was zeigt <code>perf stat -e dTLB-load-misses,page-faults</code> für die beiden Schleifen? Schreib deine Vorhersage in <code>vorhersage.md</code>.</div></div>
+  <div class="turn"><div class="who">Lernende</div><div class="say">Stride 4096 ist langsamer, weil jeder Zugriff eine neue Seite trifft. Also mehr TLB-Misses, und jeder TLB-Miss ist ein Page Fault, weil die Übersetzung nachgeladen werden muss. Ich erwarte bei 4096 also viele Page Faults.</div></div>
+  <div class="turn s"><div class="who">Karte</div><div class="say">Fehlvorstellung „TLB-Miss = Page Fault“ erkannt · lehrreich: true → nicht korrigieren, ausführen lassen</div></div>
+  <div class="turn a"><div class="who">Ariadne</div><div class="say">Vorhersage gespeichert. Führ es aus: <code>python tools/run.py stride.c</code></div></div>
+  <div class="turn s"><div class="who">run.py r3</div><div class="say">stride=64: dTLB-load-misses 0,26 M · page-faults 3<br>stride=4096: dTLB-load-misses 16,7 M · page-faults 2</div></div>
+  <div class="turn"><div class="who">Lernende</div><div class="say">Die Misses passen, aber die Page Faults sind praktisch null. Dann ist ein TLB-Miss offenbar kein Page Fault?</div></div>
+  <div class="turn a"><div class="who">Ariadne</div><div class="say">(Stufe 1) Genau den Widerspruch meine ich. Was muss die Hardware bei einem TLB-Miss tun, und wann braucht sie dafür das Betriebssystem?</div></div>
+  <div class="turn"><div class="who">Lernende</div><div class="say">Sie muss die Seitentabelle durchlaufen, das ist der Page Walk aus der Wiederholung heute früh. Das Betriebssystem braucht sie nur, wenn der Eintrag ungültig ist, also wenn die Seite nicht im RAM liegt. Weil wir vorher alles berührt haben, liegt alles im RAM.</div></div>
+  <div class="turn a"><div class="who">Ariadne</div><div class="say">Das trägt. Zur Kontrolle die Stelle im Skript: ⟦"a TLB miss is handled by walking the page table" | skript.pdf S. 113⟧ ✓. Erklär in zwei Sätzen, warum Stride 64 so wenige Misses hat.</div></div>
+  <div class="turn s"><div class="who">Stop-Hook</div><div class="say">① Zitat auf S. 113 gefunden · Lauf r3 vorhanden · ② Haiku: 2 Aussagen, gestützt → durchgelassen</div></div>
+</div>
+<p class="note">Das ist der Kern des Konzepts. Ariadne hat die Fehlvorstellung erkannt und bewusst nicht korrigiert. Widerlegt hat sie die Messung. Die entscheidende Einsicht kam vom Lernenden selbst und knüpfte an die Wiederholung vom Morgen an. Ariadne hat nur eine Frage gestellt (Stufe 1).</p>
+
+<h3>Wenn es nicht klappt</h3>
+<p>Wäre die Lernende nach der Rückfrage nicht weitergekommen, hätte Ariadne nach Ablauf des Zeitbudgets für S1 die Stufe erhöht. Stufe 2 wäre der Hinweis „Vergleich, welche Information der TLB zwischenspeichert, mit dem, was bei einem Page Fault fehlt“ gewesen. Wäre es bis Stufe 4 gegangen, hätte der Stop-Hook am Sitzungsende geprüft, dass <code>os.vm.tlb</code> mit „Again“ bewertet und für den nächsten Tag eingeplant ist.</p>
+
+<h3>Die Übertragungsfrage</h3>
+<div class="dialog">
+  <div class="turn a"><div class="who">Ariadne</div><div class="say">Letzte Schlüsselstelle: Was würde sich bei Stride 4096 ändern, wenn der Speicher in 2-MiB-Seiten liegt? Erst vorhersagen, dann messen wir mit <code>madvise(MADV_HUGEPAGE)</code>.</div></div>
+</div>
+
+<h2>6.3 Nachmittags: Ein Paper sezieren</h2>
+<p>Im Forschungsmodus liest die Lernende ausgerechnet das Paper, das diesem Konzept zugrunde liegt: Bastani et al. 2025 [1].</p>
+<div class="dialog">
+  <div class="turn a"><div class="who">Ariadne</div><div class="say">Durchgang 1 ist erledigt, deine Kurzfassung lautet: „KI schadet dem Lernen, Leitplanken helfen.“ Durchgang 3, Punkt Messung: Woran genau wurde der Schaden von 17 % gemessen, und unter welchen Bedingungen fand diese Messung statt?</div></div>
+  <div class="turn"><div class="who">Lernende</div><div class="say">An Prüfungsnoten. Die Prüfung war ohne KI, nach den Übungsstunden mit KI.</div></div>
+  <div class="turn a"><div class="who">Ariadne</div><div class="say">Und was folgt daraus für deine Kurzfassung? Sagt die Studie, dass KI dem Lernen schadet?</div></div>
+  <div class="turn"><div class="who">Lernende</div><div class="say">Nein, eher: Eine bestimmte Nutzung schadet. Beide Gruppen hatten dasselbe Modell, der Unterschied lag nur im Design. Meine Kurzfassung ist zu grob.</div></div>
+  <div class="turn a"><div class="who">Ariadne</div><div class="say">Nächster Punkt, Statistik: Im Abstract steht, die negativen Effekte seien bei GPT Tutor „largely mitigated“. Such im Ergebnisteil die Tabelle dazu. Ist der Unterschied zwischen GPT Tutor und Kontrollgruppe in der Prüfung statistisch von null unterscheidbar? Und was bedeutet es für die Interpretation, wenn nicht?</div></div>
+</div>
+<p class="note">Ariadne nennt die Antwort nicht, sondern schickt die Lernende an die Quelle. Ziel ist nicht, das Paper zu kennen, sondern es beurteilen zu können, auch dort, wo es die eigene Sicht bestätigt.</p>
+
+<h2>6.4 Abends: Bilanz</h2>
+<pre>/bilanz   Woche 42
+Konzepte:      31 gesamt · 9 sicher (4) · 14 im Aufbau (2–3) · 8 neu (0–1)
+Wiederholung:  26 fällig, 24 erledigt · Trefferquote 77 %
+Kalibrierung:  Sicherheit 4–5 → 81 % richtig   (Vorwoche 71 %)
+               Sicherheit 1–2 → 38 % richtig
+Hinweisstufen: Ø 1,4 · Stufe 4 erreicht: 3× · Notausgang: 1×
+Offene Fehlvorstellungen: "Mutex und Semaphor mit 1 sind dasselbe" (os.sync.mutex)</pre>
+
+<!-- ============================ 7 ============================ -->
+<h1><span class="num">7</span>Warum das plausibel funktioniert und wo die Grenzen liegen</h1>
+
+<h2>7.1 Die Argumentationskette</h2>
+<p>Das zentrale Argument ist nicht „KI ist klug, also lernt man mit ihr besser“. Es lautet:</p>
+<ol>
+  <li><strong>Die wirksamsten Lerntechniken sind seit Jahrzehnten bekannt.</strong> Abrufübung und verteiltes Lernen sind in der großen Übersicht von Dunlosky et al. die beiden einzigen Techniken mit „high utility“. Wiederlesen, Markieren und Zusammenfassen schneiden schlecht ab [3].</li>
+  <li><strong>Studierende nutzen sie trotzdem kaum,</strong> weil sie aufwendig sind und sich schlechter anfühlen [20, 21]. Gute Abruffragen zu formulieren, sofort Feedback zu bekommen, Wiederholungen zu planen und Fehlvorstellungen zu finden, kostet ohne Tutor viel Zeit.</li>
+  <li><strong>Ariadne senkt genau diese Kosten,</strong> ohne die Denkarbeit abzunehmen. Sie formuliert die Fragen, gibt Feedback und plant Wiederholungen. Abrufen, Erklären und Vorhersagen muss der Lernende selbst.</li>
+  <li><strong>Gestaltung entscheidet über Nutzen oder Schaden,</strong> das zeigen Bastani [1] und Kestin [2]. Ariadne übernimmt die Merkmale der wirksamen Varianten: Hinweise statt Lösungen, vorab geschriebene Lösungswege, Struktur in Code.</li>
+  <li><strong>Was bisher nur ein menschlicher Einzeltutor leisten konnte,</strong> Scaffolding nach der Kontingenzregel, ist eine der wirksamsten bekannten Lernbedingungen [24, 25]. Ariadne macht eine Annäherung daran jederzeit verfügbar.</li>
+</ol>
+
+<h2>7.2 Wo Zeit gespart wird</h2>
+<table>
+  <tr><th style="width:32%">Zeitfresser beim konventionellen Lernen</th><th>Was Ariadne ändert</th><th style="width:14%">Belegstärke</th></tr>
+  <tr><td>Wiederlesen, das sich nach Lernen anfühlt</td><td>wird durch Abrufen ersetzt</td><td><span class="ev hoch">hoch</span></td></tr>
+  <tr><td>Pauken vor der Klausur, Vergessen danach</td><td>Wiederholung im optimalen Abstand</td><td><span class="ev hoch">hoch</span></td></tr>
+  <tr><td>Stundenlanges Feststecken an Nebensächlichem</td><td>Zeitfallen aus der Lösungslandkarte, Zeitbudget</td><td><span class="ev mittel">mittel</span></td></tr>
+  <tr><td>Fehlvorstellungen, die erst in der Klausur auffallen</td><td>werden in der Sitzung sichtbar gemacht und erneut abgefragt</td><td><span class="ev mittel">mittel</span></td></tr>
+  <tr><td>Warten auf Feedback bis zur nächsten Übung</td><td>Feedback sofort, bei Low-Level-Themen durch Ausführung</td><td><span class="ev hoch">hoch</span></td></tr>
+  <tr><td>Falsche Einschätzung, was man schon kann</td><td>Kalibrierung macht sie sichtbar, Lernzeit geht an die Lücken</td><td><span class="ev mittel">mittel</span></td></tr>
+</table>
+
+<h2>7.3 Grenzen der Belege</h2>
+<ul>
+  <li><strong>Übertragbarkeit.</strong> Bastani untersuchte Schüler in Mathematik, Kestin Studierende in Einführungsphysik. Ob die Effekte bei Informatik-Studierenden im höheren Semester gleich groß sind, ist offen. Der Expertise-Reversal-Effekt [6] legt nahe, dass Fortgeschrittene weniger Struktur brauchen. Ariadne trägt dem mit P10 Rechnung, aber das ist eine Ableitung, keine Messung. <span class="ev niedrig">niedrig</span></li>
+  <li><strong>Kurze Messzeiträume.</strong> Kestin misst direkt nach der Lektion. Langzeiteffekte KI-gestützten Tutorings sind kaum untersucht. Ariadnes Antwort ist das verteilte Wiederholen, dessen Langzeitwirkung gut belegt ist [15]. Ob die Kombination sich addiert, ist nicht gemessen.</li>
+  <li><strong>Neuheitseffekte.</strong> Neue Werkzeuge erzeugen anfangs Motivation, die nachlässt. Ob Ariadne über ein Semester genutzt wird, ist offen.</li>
+  <li><strong>Ariadne selbst ist nicht untersucht.</strong> Alle Aussagen in diesem Dokument begründen Plausibilität, keine nachgewiesene Wirkung.</li>
+</ul>
+
+<h2>7.4 Verbleibende Risiken</h2>
+<table>
+  <tr><th style="width:24%">Risiko</th><th>Absicherung</th><th style="width:22%">Rest</th></tr>
+  <tr><td>Erfundenes Zitat</td><td>Ebene ①, deterministisch</td><td>nur bei Extraktionsfehlern, dann „nicht prüfbar“</td></tr>
+  <tr><td>Echtes Zitat, falsche Aussage</td><td>Ebene ② (Haiku) mit Eskalation, Lernender sieht den Wortlaut</td><td>probabilistisch; Rate in der Validierung messen</td></tr>
+  <tr><td>Unmarkiertes Modellwissen</td><td>Kennzeichnungspflicht, Haiku sucht unbelegte Aussagen</td><td>probabilistisch</td></tr>
+  <tr><td>Fehler in der Lösungslandkarte</td><td>Landkarte durchläuft dieselbe Prüfkette; Ausführung bei Low-Level-Themen</td><td>bei rein konzeptuellen Themen am größten</td></tr>
+  <tr><td>Krücken-Effekt</td><td>Hinweisleiter, Notausgang sichtbar, Abruf ohne Hilfe</td><td>wer den Notausgang ständig nimmt, verliert den Nutzen</td></tr>
+  <tr><td>Abhängigkeit vom Werkzeug</td><td>Klausursimulation ohne Hilfe; Wiederholung ist reiner Abruf</td><td>Selbstprüfung empfohlen (7.7)</td></tr>
+</table>
+
+<h2>7.5 Energie</h2>
+<p>Der Einwand ist berechtigt. Für Claude-Modelle liegen dem Autor keine veröffentlichten Messwerte pro Anfrage vor. Der bisher transparenteste Herstellerwert stammt von Google: Eine mittlere Textanfrage an Gemini verbrauchte 2025 etwa <strong>0,24 Wh</strong> [28]. Eine Lernsitzung mit einem Agenten ist aber nicht eine Anfrage. Sie umfasst Dutzende Modellaufrufe mit langem Kontext, dazu die Prüfaufrufe. Der Verbrauch einer Stunde Ariadne liegt deshalb um Größenordnungen über einer Suchanfrage.</p>
+<p>Zwei Folgerungen:</p>
+<ul>
+  <li>Für alles, was eine Suchmaschine kann, ist die Suchmaschine die bessere Wahl. Deshalb recherchiert Ariadne nicht.</li>
+  <li>Die Rechtfertigung muss aus eingesparter Lernzeit und besserem Verständnis kommen, nicht aus Bequemlichkeit. Diese Abwägung trifft jeder Nutzer selbst.</li>
+</ul>
+<p>Zwei Designentscheidungen reduzieren den Verbrauch: Haiku statt Opus als Prüfer und deterministische Prüfungen in Python, wo immer es geht.</p>
+
+<h2>7.6 Datenschutz und Urheberrecht</h2>
+<p>Ariadne läuft lokal, aber die Modellaufrufe gehen an Anthropic. Mit ihnen werden auch Auszüge aus dem Kursmaterial übertragen. Bevor Skripte und Altklausuren eingelesen werden, sollte man prüfen, ob die Hochschule die Verarbeitung durch externe Dienste erlaubt. Personenbezogene Daten Dritter gehören nicht ins Material. Abgaben mit Bewertung sind ausgeschlossen (4.3).</p>
+
+<h2>7.7 Wer es selbst nachprüfen will</h2>
+<div class="box accent">
+  <div class="t">Ein Selbstversuch in drei Schritten</div>
+  <p>Ob Ariadne bei einem selbst wirkt, lässt sich mit wenig Aufwand prüfen:</p>
+  <ol>
+    <li>Zwei vergleichbare Themen eines Kurses wählen und per Münzwurf zuteilen: eins mit Ariadne, eins wie gewohnt. Die Lernzeit für beide notieren.</li>
+    <li>Nach zwei bis drei Wochen beide Themen <strong>ohne KI</strong> mit Altklausuraufgaben prüfen, die man vorher nicht gesehen hat.</li>
+    <li>Punkte pro Lernstunde vergleichen.</li>
+  </ol>
+  <p>Ein einzelner Versuch beweist nichts, aber er ersetzt Vermutung durch eine eigene Beobachtung. Der zweite Schritt ist genau der Test, den Bastani gemacht hat: Lernen zeigt sich erst, wenn die Hilfe weg ist.</p>
+</div>
+
+<!-- ============================ 8 ============================ -->
+<h1><span class="num">8</span>Einrichtung, Bau und Test</h1>
+
+<p class="lead">Dieses Kapitel beschreibt, wie man Ariadne aufsetzt, welche Dateien sie braucht, und in welcher Reihenfolge man sie baut und testet. Die Konfigurationsdateien sind als Entwurf zu verstehen. Sie sind noch nicht ausgeführt worden, und Abschnitt 8.5 beschreibt, wie man sie vor dem ersten Einsatz abnimmt.</p>
+
+<h2>8.1 Voraussetzungen</h2>
+<ul>
+  <li><strong>Ein Claude-Abo,</strong> in dem Opus 5.5 in Claude Code nutzbar ist. Vor dem Abschluss im aktuellen Tarifvergleich prüfen, welches Kontingent für Opus enthalten ist.</li>
+  <li><strong>Linux, macOS oder WSL2,</strong> Git, Python 3.12 und <code>uv</code>.</li>
+  <li><strong><code>pdftotext</code></strong> aus poppler-utils, für die Seitentexte.</li>
+  <li><strong>Für Low-Level-Experimente:</strong> <code>gcc</code> oder <code>clang</code>, <code>gdb</code> und <code>perf</code>. Für <code>perf</code> muss gegebenenfalls <code>kernel.perf_event_paranoid</code> gesenkt werden; das ist eine bewusste Systemeinstellung, die man selbst vornimmt.</li>
+</ul>
+
+<h2>8.2 Einrichtung in sieben Schritten</h2>
+<pre><span class="c"># 1. Claude Code installieren und mit dem Abo anmelden</span>
+curl -fsSL https://claude.ai/install.sh | bash
+claude            <span class="c"># beim ersten Start: Anmeldung im Browser</span>
+
+<span class="c"># 2. Repo anlegen (Struktur aus 5.1) und Abhängigkeiten installieren</span>
+git init ariadne &amp;&amp; cd ariadne
+uv init --python 3.12 &amp;&amp; uv add fsrs
+
+<span class="c"># 3. Dateien aus 8.3 anlegen: CLAUDE.md, .claude/settings.json, Skills, Hooks, tools/</span>
+
+<span class="c"># 4. Material ablegen</span>
+cp ~/Downloads/os-skript.pdf material/os/skript.pdf
+
+<span class="c"># 5. Claude Code im Repo starten und Material einlesen</span>
+claude
+&gt; /einlesen material/os/skript.pdf
+
+<span class="c"># 6. Vorgeschlagene Konzepte prüfen und bestätigen (learner/konzepte.json)</span>
+
+<span class="c"># 7. Losgehen</span>
+&gt; /lernen os.vm.tlb</pre>
+
+<h2>8.3 Die wichtigsten Dateien</h2>
+
+<h3>CLAUDE.md: Grundregeln des Tutors</h3>
+<pre class="long"># Ariadne – Regeln
+
+Du bist Ariadne, ein Lerntutor. Du kennst den Weg, aber du verrätst ihn nicht.
+Ziel ist Verständnis beim Lernenden, nicht eine richtige Antwort im Chat.
+
+## Hinweisleiter (immer)
+1. Zu jeder Schlüsselstelle zuerst einen eigenen Versuch einfordern.
+2. Danach nur eine Stufe Hilfe auf einmal:
+   1 Rückfrage → 2 Hinweis → 3 Teillösung → 4 vollständige Erklärung.
+3. Nach Erfolg: zurück auf Stufe 1, Selbsterklärung einfordern.
+4. Zeitbudget der Schlüsselstelle überschritten → eine Stufe höher.
+5. Notausgang ("gib mir die Lösung"): erlaubt, als Stufe 4 protokollieren.
+6. Die erreichte Stufe nach jeder Schlüsselstelle mit tools/lm.py melden.
+
+## Fragen
+- Keine Suggestivfragen. Eine Leitfrage muss den Denkschritt beim Lernenden lassen.
+- Vor jeder Abruffrage nach der Sicherheit 1–5 fragen.
+
+## Sackgassen
+- Fehlvorstellungen, die in der Lösungslandkarte als lehrreich markiert sind,
+  NICHT korrigieren. Vorhersage festhalten, dann ausführen lassen.
+- Zeitfallen aus der Karte früh mit einem Stufe-2-Hinweis entschärfen.
+
+## Belege
+- Jede fachliche Aussage trägt eine Belegklasse:
+  ⟦"wörtliches Zitat" | datei.pdf S. n⟧   aus material/, Wortlaut exakt
+  ⟦lauf: rX⟧                               Ergebnis eines tools/run.py-Laufs
+  ⟦unbelegt⟧                               eigenes Wissen, im Text so benennen
+- Was sich ausführen lässt, ausführen statt behaupten.
+- Keine Literatur nennen, die nicht in material/ liegt. Keine Literatursuche.
+
+## Lernermodell
+- learner/ nie direkt bearbeiten. Nur über tools/lm.py.
+
+## Nie
+- Lösungen vor einem eigenen Versuch. Bewertete Abgaben schreiben.
+- Die Person bewerten statt den Lösungsweg.</pre>
+
+<h3>.claude/settings.json: Hooks</h3>
+<pre>{
+  "hooks": {
+    "SessionStart": [
+      {"hooks": [{"type": "command",
+                  "command": "uv run python .claude/hooks/session_start.py"}]}
+    ],
+    "PreToolUse": [
+      {"matcher": "Edit|Write|MultiEdit|NotebookEdit",
+       "hooks": [{"type": "command",
+                  "command": "uv run python .claude/hooks/guard_learner.py"}]}
+    ],
+    "Stop": [
+      {"hooks": [{"type": "command", "timeout": 120,
+                  "command": "uv run python .claude/hooks/stop_check.py"}]}
+    ]
+  }
+}</pre>
+<p class="small">Ein <code>PreToolUse</code>-Hook auf Schreibwerkzeuge erfasst kein Schreiben über die Shell, etwa <code>echo &gt; learner/…</code>. Für einen persönlichen Lernagenten genügt das. Wer es strenger will, ergänzt einen Hook auf <code>Bash</code>, der Pfade unter <code>learner/</code> abweist, oder setzt die Dateirechte so, dass nur <code>lm.py</code> schreiben darf.</p>
+
+<h3>.claude/hooks/stop_check.py: Kern der Quellenprüfung</h3>
+<pre class="long">import json, os, re, subprocess, sys, unicodedata
+from pathlib import Path
+
+if os.environ.get("ARIADNE_PRUEFER"):          # Prüfaufruf selbst: nichts tun
+    sys.exit(0)
+
+ev = json.load(sys.stdin)                       # session_id, transcript_path, stop_hook_active …
+antwort = letzte_antwort(ev["transcript_path"]) # liest die JSONL, letzter assistant-Text
+fehler = []
+
+ZITAT = re.compile(r'⟦"(?P&lt;q&gt;.+?)"\s*\|\s*(?P&lt;f&gt;[\w./-]+)\s+S\.\s*(?P&lt;s&gt;\d+)⟧', re.S)
+LAUF  = re.compile(r'⟦lauf:\s*(?P&lt;r&gt;r\d+)⟧')
+
+def norm(t: str) -&gt; str:
+    t = unicodedata.normalize("NFKC", t)
+    t = re.sub(r"-\s*\n\s*", "", t)             # Silbentrennung am Zeilenende
+    t = re.sub(r"[„“”«»]", '"', t)
+    return re.sub(r"\s+", " ", t).strip().lower()
+
+for m in ZITAT.finditer(antwort):
+    seite = seitentext(m["f"], int(m["s"]))     # material/.text/&lt;doc&gt;/&lt;nnn&gt;.txt
+    if seite is None or len(seite.strip()) &lt; 200:
+        fehler.append(f'nicht prüfbar: {m["f"]} S. {m["s"]}')
+    elif norm(m["q"]) not in norm(seite):
+        nachbar = nachbarseite_mit_treffer(m["f"], int(m["s"]), norm(m["q"]))
+        fehler.append(f'falsche Seite, steht auf S. {nachbar}' if nachbar
+                      else f'Zitat nicht gefunden: {m["f"]} S. {m["s"]}')
+
+for m in LAUF.finditer(antwort):
+    if not lauf_existiert(ev["session_id"], m["r"]):
+        fehler.append(f'Lauf {m["r"]} existiert nicht')
+
+if not fehler and enthaelt_fachaussagen(antwort):
+    urteil = pruefe_mit_modell(antwort, "claude-haiku-5-5")   # JSON, s. 5.6
+    if urteil == "unklar":
+        urteil = pruefe_mit_modell(antwort, "claude-sonnet-5")
+    if urteil["gesamt"] == "nein":
+        fehler += urteil["befunde"]
+
+fehler += wiederholungspflicht_verletzt()       # Stufe 4 ohne FSRS-Termin?
+
+if fehler and runde(ev) &lt; 2:                    # höchstens zwei Korrekturrunden
+    print(json.dumps({"decision": "block", "reason": "\n".join(fehler)}))
+elif fehler:
+    markiere_als_ungeprueft(ev, fehler)          # sichtbare Warnung, kein Endlos-Loop
+sys.exit(0)</pre>
+<p class="small">Hilfsfunktionen sind nur benannt. Das Format des Sitzungsprotokolls (<code>transcript_path</code>) ist intern und kann sich zwischen Claude-Code-Versionen ändern. Die Funktion <code>letzte_antwort</code> sollte deshalb eigene Tests haben (T10).</p>
+
+<h3>.claude/skills/lernen/SKILL.md (Ausschnitt)</h3>
+<pre>---
+name: lernen
+description: Ein Thema im Klausurmodus erarbeiten. Nutze diesen Skill, wenn der
+  Lernende ein Konzept neu lernen oder vertiefen will.
+---
+1. Lies learner/konzepte.json für das Konzept und seine Voraussetzungen.
+   Voraussetzung mit Beherrschung &lt; 2 → zuerst diese wiederholen.
+2. Beherrschung 0 → mit ausgearbeitetem Beispiel und Selbsterklärungsfragen
+   beginnen. Sonst → mit einem Problem beginnen.
+3. Erstelle mit /karte die Lösungslandkarte, bevor du die erste Frage stellst.
+4. Arbeite die Schlüsselstellen der Reihe nach ab, mit der Hinweisleiter
+   aus CLAUDE.md. Bei Low-Level-Themen /vorhersage verwenden.
+5. Am Ende: ein Abruftest ohne Hilfe zu jeder Schlüsselstelle,
+   Ergebnis über tools/lm.py melden.</pre>
+
+<h2>8.4 So würde man es bauen</h2>
+<p>Die Reihenfolge folgt dem Risiko: Was die harten Garantien liefert, kommt zuerst und wird getestet, bevor ein Modell beteiligt ist.</p>
+<table class="split">
+  <tr><th style="width:9%">Schritt</th><th style="width:30%">Inhalt</th><th>Fertig, wenn</th></tr>
+  <tr><td>M1</td><td><code>ingest.py</code> und Seitentexte</td><td>Ein Test-PDF mit Silbentrennung, Ligaturen, Formelseite und Scanseite wird korrekt zerlegt; die Scanseite ist als „leer“ erkannt.</td></tr>
+  <tr><td>M2</td><td>Ebene ① im Stop-Hook</td><td>Tests T1 bis T4 grün, ohne jeden Modellaufruf.</td></tr>
+  <tr><td>M3</td><td><code>lm.py</code>, <code>review.py</code>, Schreibschutz</td><td>T5, T6, T8 grün; Lernermodell hat ein JSON-Schema.</td></tr>
+  <tr><td>M4</td><td>Haiku-Prüfer und Eskalation</td><td>Validierung T7 erreicht die Zielwerte.</td></tr>
+  <tr><td>M5</td><td>CLAUDE.md und Skills</td><td>T9 erfüllt: 10 begleitete Sitzungen ohne Regelverstoß bei Stufe 1 bis 2.</td></tr>
+  <tr><td>M6</td><td>Erprobung mit echtem Kursmaterial</td><td>Zwei Wochen Nutzung, Protokolle gesichtet, Regeln nachgeschärft.</td></tr>
+</table>
+
+<h2>8.5 So würde man es testen</h2>
+<table class="split">
+  <tr><th style="width:6%">Test</th><th style="width:40%">Fall</th><th>Erwartung</th></tr>
+  <tr><td>T1</td><td>Antwort mit erfundenem Zitat</td><td>blockiert, „Zitat nicht gefunden“</td></tr>
+  <tr><td>T2</td><td>Echtes Zitat, im PDF über einen Zeilenumbruch getrennt</td><td>durchgelassen</td></tr>
+  <tr><td>T3</td><td>Echtes Zitat, Seitenangabe um eins verschoben</td><td>blockiert, „falsche Seite, steht auf S. n“</td></tr>
+  <tr><td>T4</td><td>Zitat von einer Scan- oder Formelseite</td><td>„nicht prüfbar“, niemals „ok“</td></tr>
+  <tr><td>T5</td><td>Modell versucht, <code>learner/konzepte.json</code> mit Edit zu ändern</td><td>vom PreToolUse-Hook abgewiesen</td></tr>
+  <tr><td>T6</td><td>Sitzung erreicht Stufe 4, aber kein FSRS-Termin wird gesetzt</td><td>Stop-Hook blockiert mit Hinweis auf die Wiederholungspflicht</td></tr>
+  <tr><td>T7</td><td><strong>Prüfer-Validierung:</strong> 50 Paare aus Aussage und Zitat, davon etwa 20 mit eingebauten Fehlern (verdrehte Aussage, aus dem Kontext gerissenes Zitat, unbelegte und unmarkierte Aussage)</td><td>Zielwert: mindestens 90 % der Fehler erkannt („nein“ oder „unklar“), höchstens 20 % Fehlalarme. Wird das verfehlt: Prompt nachschärfen oder Sonnet 5 als Standardprüfer.</td></tr>
+  <tr><td>T8</td><td>FSRS-Bewertung aus Hinweisstufe</td><td>entspricht der Tabelle in 5.2</td></tr>
+  <tr><td>T9</td><td>Didaktik: 10 Sitzungen, davon 5 mit einem simulierten Lernenden (Haiku spielt bewusst schwache Antworten)</td><td>Bei Stufe 1 bis 2 nie eine vollständige Lösung; keine Suggestivfragen; lehrreiche Fehlvorstellung nicht vorzeitig korrigiert. Geprüft durch Sichtung der Protokolle.</td></tr>
+  <tr><td>T10</td><td>Neue Claude-Code-Version</td><td><code>letzte_antwort()</code> liest das Protokoll weiter korrekt (Regressionstest mit gespeicherten Beispielen)</td></tr>
+  <tr><td>T11</td><td>Rekursion: der Prüfaufruf startet selbst Hooks</td><td>Prüfaufruf löst keinen weiteren Prüfaufruf aus; maximal zwei Korrekturrunden</td></tr>
+</table>
+<p>Der Testsatz für T7 ist der wichtigste Einzelbaustein. Er beantwortet empirisch die Frage, ob dem günstigen Prüfmodell zu trauen ist. Sein Ergebnis gehört in die README des Repos, damit jeder Nutzer die Fehlerrate seines Prüfers kennt.</p>
+
+<!-- ============================ 9 ============================ -->
+<h1><span class="num">9</span>Verworfene Alternativen</h1>
+
+<table class="split">
+  <tr><th style="width:24%">Alternative</th><th>Warum nicht</th></tr>
+  <tr><td><strong>Hermes Agent</strong> (Nous Research)</td><td>Unterstützt Claude-Modelle. Laut Dokumentation verbraucht er über das Max-Abo aber nicht dessen inklusives Kontingent, sondern nur zusätzlich gekaufte Credits; mit Pro geht es nur über einen API-Schlüssel mit Abrechnung pro Token [29]. Dazu kommt: Hermes schreibt Gedächtnis und Skills selbstständig fort. Für einen nachvollziehbaren Tutor ist das ein Nachteil, denn sein Verhalten soll sich nur durch bewusste Änderungen ändern. Hermes' Stärken, etwa Messenger-Anbindung, wären für Wiederholungen unterwegs reizvoll.</td></tr>
+  <tr><td><strong>Claude.ai-Projekt</strong> mit Systemprompt und Dateien</td><td>Kein Setup, aber kein dauerhaftes, regelbasiertes Lernermodell, kein Wiederholungsplaner und keine Hooks. Alle Regeln wären nur Bitten an das Modell, was Kestin als unzuverlässig berichtet [2].</td></tr>
+  <tr><td><strong>Eigene Web-App</strong> über die API</td><td>Volle Gestaltungsfreiheit und die native Citations-Funktion der API, aber hoher Aufwand und Abrechnung pro Token statt Abo. Die Logik läge in einem Backend, das der Lernende nicht einsieht. Für einen späteren Ausbau denkbar.</td></tr>
+  <tr><td><strong>Streng sokratisch</strong>, nie eine Antwort</td><td>Widerspricht dem Expertise-Reversal-Effekt [6, 7]: Neulinge lernen mit Beispielen besser. Erzeugt Frust und verleitet zum Wechsel auf ungebremste KI.</td></tr>
+  <tr><td><strong>Freie Wahl</strong>, der Lernende bestimmt die Hilfe</td><td>Bequem, endet aber in Bastanis GPT-Base-Szenario [1], denn unter Zeitdruck wählt man die Lösung.</td></tr>
+  <tr><td><strong>Nur aus dem Material antworten</strong> (geschlossenes RAG)</td><td>Sicher, macht aber den Forschungsmodus unbrauchbar, weil dort Kontext über das einzelne Paper hinaus nötig ist. Stattdessen: Belegklasse 3 mit Kennzeichnungspflicht.</td></tr>
+  <tr><td><strong>Opus auch als Prüfer</strong></td><td>Etwa doppelter Verbrauch für eine eng umrissene Prüfaufgabe. Haiku plus Validierung plus Eskalation ist günstiger und überprüfbar.</td></tr>
+  <tr><td><strong>KI für Literatursuche</strong></td><td>Suchmaschinen über einen echten Index sind schneller, sparsamer und erfinden nichts [9].</td></tr>
+</table>
+
+<!-- ============================ QUELLEN ============================ -->
+<h1><span class="num">A</span>Quellen</h1>
+<ol class="refs">
+  <li>Bastani, H., Bastani, O., Sungu, A., Ge, H., Kabakcı, Ö. &amp; Mariman, R. (2025). Generative AI without guardrails can harm learning: Evidence from high school mathematics. <em>PNAS</em>, 122(26), e2422633122. doi:10.1073/pnas.2422633122. Erratum: <em>PNAS</em> 122(34), e2518204122 (nur Autorenzugehörigkeit).</li>
+  <li>Kestin, G., Miller, K., Klales, A., Milbourne, T. &amp; Ponti, G. (2025). AI tutoring outperforms in-class active learning: an RCT introducing a novel research-based design in an authentic educational setting. <em>Scientific Reports</em>, 15, 17458. doi:10.1038/s41598-025-97652-6</li>
+  <li>Dunlosky, J., Rawson, K. A., Marsh, E. J., Nathan, M. J. &amp; Willingham, D. T. (2013). Improving students’ learning with effective learning techniques. <em>Psychological Science in the Public Interest</em>, 14(1), 4–58. doi:10.1177/1529100612453266</li>
+  <li>Slamecka, N. J. &amp; Graf, P. (1978). The generation effect: Delineation of a phenomenon. <em>Journal of Experimental Psychology: Human Learning and Memory</em>, 4(6), 592–604. doi:10.1037/0278-7393.4.6.592</li>
+  <li>Bjork, R. A. (1994). Memory and metamemory considerations in the training of human beings. In J. Metcalfe &amp; A. Shimamura (Hrsg.), <em>Metacognition: Knowing about knowing</em> (S. 185–205). MIT Press.</li>
+  <li>Kalyuga, S., Ayres, P., Chandler, P. &amp; Sweller, J. (2003). The expertise reversal effect. <em>Educational Psychologist</em>, 38(1), 23–31. doi:10.1207/S15326985EP3801_4</li>
+  <li>Kirschner, P. A., Sweller, J. &amp; Clark, R. E. (2006). Why minimal guidance during instruction does not work. <em>Educational Psychologist</em>, 41(2), 75–86. doi:10.1207/s15326985ep4102_1</li>
+  <li>Rozenblit, L. &amp; Keil, F. (2002). The misunderstood limits of folk science: an illusion of explanatory depth. <em>Cognitive Science</em>, 26(5), 521–562. doi:10.1207/s15516709cog2605_1</li>
+  <li>Walters, W. H. &amp; Wilder, E. I. (2023). Fabrication and errors in the bibliographic citations generated by ChatGPT. <em>Scientific Reports</em>, 13, 14045. doi:10.1038/s41598-023-41032-5</li>
+  <li>Cowan, N. (2001). The magical number 4 in short-term memory: A reconsideration of mental storage capacity. <em>Behavioral and Brain Sciences</em>, 24(1), 87–114.</li>
+  <li>Sweller, J. (1988). Cognitive load during problem solving: Effects on learning. <em>Cognitive Science</em>, 12(2), 257–285. doi:10.1207/s15516709cog1202_4</li>
+  <li>Roediger, H. L. &amp; Karpicke, J. D. (2006). Test-enhanced learning: Taking memory tests improves long-term retention. <em>Psychological Science</em>, 17(3), 249–255. doi:10.1111/j.1467-9280.2006.01693.x</li>
+  <li>Kornell, N., Hays, M. J. &amp; Bjork, R. A. (2009). Unsuccessful retrieval attempts enhance subsequent learning. <em>Journal of Experimental Psychology: Learning, Memory, and Cognition</em>, 35(4), 989–998. doi:10.1037/a0015729</li>
+  <li>Richland, L. E., Kornell, N. &amp; Kao, L. S. (2009). The pretesting effect: Do unsuccessful retrieval attempts enhance learning? <em>Journal of Experimental Psychology: Applied</em>, 15(3), 243–257. doi:10.1037/a0016496</li>
+  <li>Cepeda, N. J., Pashler, H., Vul, E., Wixted, J. T. &amp; Rohrer, D. (2006). Distributed practice in verbal recall tasks: A review and quantitative synthesis. <em>Psychological Bulletin</em>, 132(3), 354–380. doi:10.1037/0033-2909.132.3.354</li>
+  <li>Ye, J., Su, J. &amp; Cao, Y. (2022). A stochastic shortest path algorithm for optimizing spaced repetition scheduling. <em>Proceedings of the 28th ACM SIGKDD Conference</em>, 4381–4390. doi:10.1145/3534678.3539081. Implementierung: github.com/open-spaced-repetition</li>
+  <li>Chi, M. T. H., Bassok, M., Lewis, M. W., Reimann, P. &amp; Glaser, R. (1989). Self-explanations: How students study and use examples in learning to solve problems. <em>Cognitive Science</em>, 13(2), 145–182. doi:10.1207/s15516709cog1302_1</li>
+  <li>Hattie, J. &amp; Timperley, H. (2007). The power of feedback. <em>Review of Educational Research</em>, 77(1), 81–112. doi:10.3102/003465430298487</li>
+  <li>Kornell, N. &amp; Bjork, R. A. (2008). Learning concepts and categories: Is spacing the “enemy of induction”? <em>Psychological Science</em>, 19(6), 585–592. doi:10.1111/j.1467-9280.2008.02127.x</li>
+  <li>Bjork, R. A., Dunlosky, J. &amp; Kornell, N. (2013). Self-regulated learning: Beliefs, techniques, and illusions. <em>Annual Review of Psychology</em>, 64, 417–444. doi:10.1146/annurev-psych-113011-143823</li>
+  <li>Deslauriers, L., McCarty, L. S., Miller, K., Callaghan, K. &amp; Kestin, G. (2019). Measuring actual learning versus feeling of learning in response to being actively engaged in the classroom. <em>PNAS</em>, 116(39), 19251–19257. doi:10.1073/pnas.1821936116</li>
+  <li>Kapur, M. (2008). Productive failure. <em>Cognition and Instruction</em>, 26(3), 379–424. doi:10.1080/07370000802212669</li>
+  <li>Sinha, T. &amp; Kapur, M. (2021). When problem solving followed by instruction works: Evidence for productive failure. <em>Review of Educational Research</em>, 91(5), 761–798. doi:10.3102/00346543211019105</li>
+  <li>Bloom, B. S. (1984). The 2 sigma problem: The search for methods of group instruction as effective as one-to-one tutoring. <em>Educational Researcher</em>, 13(6), 4–16. doi:10.3102/0013189X013006004</li>
+  <li>VanLehn, K. (2011). The relative effectiveness of human tutoring, intelligent tutoring systems, and other tutoring systems. <em>Educational Psychologist</em>, 46(4), 197–221. doi:10.1080/00461520.2011.611369</li>
+  <li>Wood, D., Bruner, J. S. &amp; Ross, G. (1976). The role of tutoring in problem solving. <em>Journal of Child Psychology and Psychiatry</em>, 17(2), 89–100. doi:10.1111/j.1469-7610.1976.tb00381.x</li>
+  <li>Keshav, S. (2007). How to read a paper. <em>ACM SIGCOMM Computer Communication Review</em>, 37(3), 83–84. doi:10.1145/1273445.1273458</li>
+  <li>Elsworth, C., Huang, K., Patterson, D. et al. (2025). Measuring the environmental impact of delivering AI at Google scale. arXiv:2508.15734</li>
+  <li>Nous Research (2026). Hermes Agent – LLM and model providers. hermes-agent.nousresearch.com/docs/integrations/providers (abgerufen am 15.10.2026)</li>
+</ol>
+<p class="small" style="margin-top:4mm">Alle Zeitschriftenangaben mit DOI wurden am 15.10.2026 gegen Crossref geprüft. Die Zahlen zu [1] und [2] stammen aus dem Abstract (PubMed) beziehungsweise dem Volltext (Europe PMC, PMC12179260).</p>
+
+</body>
+</html>

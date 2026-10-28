@@ -1,0 +1,37 @@
+{
+ "modell": "claude-haiku-5-5",
+ "erkannt": 1.0,
+ "fehlalarme": 0.0,
+ "paare": [
+  {
+   "nr": 1,
+   "erwartet": "ja",
+   "urteil": "ja",
+   "fehlerart": "korrekt"
+  },
+  {
+   "nr": 2,
+   "erwartet": "nein",
+   "urteil": "nein",
+   "fehlerart": "verdrehte Aussage"
+  },
+  {
+   "nr": 3,
+   "erwartet": "nein",
+   "urteil": "nein",
+   "fehlerart": "Gegenteil des Zitats"
+  },
+  {
+   "nr": 4,
+   "erwartet": "nein",
+   "urteil": "nein",
+   "fehlerart": "unbelegte, unmarkierte Aussage"
+  },
+  {
+   "nr": 5,
+   "erwartet": "ja",
+   "urteil": "ja",
+   "fehlerart": "korrekt, Modellwissen markiert"
+  }
+ ]
+}
