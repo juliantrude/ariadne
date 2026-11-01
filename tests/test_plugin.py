@@ -29,7 +29,7 @@ def test_einrichten_legt_lernrepo_an_und_ueberschreibt_nichts(tmp_path):
     neu = einrichten.einrichten(ziel)
     assert "ariadne.toml" in neu and "CLAUDE.md" not in neu
     assert (ziel / "CLAUDE.md").read_text() == "meine Notizen"
-    assert json.loads((ziel / ".claude" / "settings.json").read_text())["enabledPlugins"] == {"ariadne@ariadne": True}
+    assert json.loads((ziel / ".claude" / "settings.json").read_text())["enabledPlugins"] == {"ariadne@juliantrude": True}
     assert (ziel / "learner" / "kapitel").is_dir() and (ziel / ".git").is_dir()
     with pytest.raises(SystemExit):
         einrichten.einrichten(ziel)

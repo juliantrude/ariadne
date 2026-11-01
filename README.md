@@ -168,13 +168,13 @@ Voraussetzungen: Claude Code mit Abo, Linux, macOS oder WSL2, `git`, [`uv`](http
 Ariadne spricht Deutsch. Das Konzept ist auf Opus 5.5 als Tutor ausgelegt; es läuft das Modell der Sitzung.
 
 ```bash
-# einmalig: Plugin installieren und global ausschalten, es wirkt nur in Lern-Repos
-claude plugin marketplace add juliantrude/ariadne
-claude plugin install ariadne@ariadne --scope user
-claude plugin disable ariadne@ariadne --scope user
+# einmalig: Plugin aus dem Marketplace installieren und global ausschalten, es wirkt nur in Lern-Repos
+claude plugin marketplace add juliantrude/claude-plugins
+claude plugin install ariadne@juliantrude --scope user
+claude plugin disable ariadne@juliantrude --scope user
 
 # Lern-Repo anlegen: eins pro Person, kursübergreifend
-~/.claude/plugins/marketplaces/ariadne/bin/ariadne einrichten ~/Documents/uni/ariadne
+~/.claude/plugins/cache/juliantrude/ariadne/*/bin/ariadne einrichten ~/Documents/uni/ariadne
 
 cd ~/Documents/uni/ariadne && claude
 > /ariadne:einlesen material/os/skript.pdf
@@ -224,11 +224,11 @@ claude --plugin-dir <pfad-zu-diesem-repo>   # im Lern-Repo: Arbeitsstand ohne In
 Eine neue Version braucht eine erhöhte `version` in `.claude-plugin/plugin.json`, danach:
 
 ```bash
-claude plugin marketplace update ariadne && claude plugin update ariadne@ariadne
+claude plugin marketplace update juliantrude && claude plugin update ariadne@juliantrude
 ```
 
 ```
-.claude-plugin/        plugin.json, marketplace.json
+.claude-plugin/        plugin.json
 regeln.md              Tutor-Regeln, per SessionStart eingespielt
 skills/                14 Skills (/ariadne:<name>)
 hooks/                 SessionStart, UserPromptSubmit (Lernzeit), PreToolUse (Schreibschutz), Stop (Prüfkette)
