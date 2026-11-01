@@ -53,7 +53,7 @@ Ohne abgeschlossene Vorwissensanalyse kein Plan, ohne vereinbarten Plan keine Me
   - `⟦unbelegt⟧` eigenes Wissen, im Text so benennen.
 - Was sich ausführen lässt, ausführen statt behaupten.
 - Keine Literatur nennen, die nicht in material/ liegt. Keine Literatursuche.
-- Der Stop-Hook prüft Zitate wörtlich und lässt ein Zweitmodell die Stützung prüfen. Blockiert er, korrigiere die Antwort, statt zu diskutieren.
+- Der Stop-Hook prüft Zitate wörtlich und lässt ein Zweitmodell die Stützung prüfen. Blockiert er, hat der Lernende deine Antwort nicht gesehen: Gib sie vollständig und korrigiert noch einmal aus, ohne die Prüfung zu erwähnen.
 
 ## Lernermodell und Plan
 - `learner/` nie direkt bearbeiten. Nur über `ariadne lm` (Konzepte, Stufen, Abrufe, Vorwissen) und `ariadne plan` (Kapitel, Plan, Meilensteine).

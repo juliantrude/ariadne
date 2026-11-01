@@ -102,7 +102,10 @@ Seite: Ein erfundenes Zitat kommt nicht durch, eine Seite ohne prüfbaren Text g
 nie als „ok“. Danach prüft ein günstiges Zweitmodell (Haiku 5.5) ohne Kenntnis des Gesprächs, ob das Zitat
 die Aussage stützt und ob unbelegte Aussagen unmarkiert geblieben sind. Bei „unklar“ eskaliert es an
 Sonnet 5.5. Der Hook blockiert fehlerhafte Antworten für höchstens zwei Korrekturrunden; danach erscheint
-eine sichtbare Warnung.
+eine sichtbare Warnung. Eine Antwort erscheint deshalb erst nach der Prüfung und als Ganzes, und von einer
+korrigierten Antwort siehst du nur die letzte Fassung, dazu eine Zeile `Stop hook feedback`. Das braucht
+Claude Code 2.1.314 oder neuer; ältere Versionen beachten die Rückmeldung nicht. Die verworfenen Entwürfe
+bleiben im Sitzungsprotokoll und in der ausführlichen Ansicht (`ctrl+o`) lesbar.
 
 ### Lernermodell, das sich nicht schönschreibt
 
@@ -231,7 +234,7 @@ claude plugin marketplace update juliantrude && claude plugin update ariadne@jul
 .claude-plugin/        plugin.json
 regeln.md              Tutor-Regeln, per SessionStart eingespielt
 skills/                14 Skills (/ariadne:<name>)
-hooks/                 SessionStart, UserPromptSubmit (Lernzeit), PreToolUse (Schreibschutz), Stop (Prüfkette)
+hooks/                 SessionStart, UserPromptSubmit (Lernzeit), PreToolUse (Schreibschutz), Stop (Prüfkette), MessageDisplay (nur Geprüftes zeigen)
 bin/ariadne            ein Einstieg für alle Werkzeuge
 tools/                 lm plan review run ingest gedaechtnis einrichten validiere_pruefer; Logik in tools/kern/
 vorlage/               Inhalt eines neuen Lern-Repos

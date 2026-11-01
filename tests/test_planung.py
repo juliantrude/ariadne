@@ -2,7 +2,7 @@
 import json
 
 import pytest
-from conftest import hook, transkript
+from conftest import blockiert, hook, transkript
 
 from kern import lernermodell as lm
 from kern import planung as pl
@@ -102,7 +102,7 @@ def test_stop_hook_faengt_erfundene_zustimmung(kapitel, tmp_path):
     pl.vereinbaren("os", "Klingt gut")  # ohne ARIADNE_TRANSCRIPT, also erst der Stop-Hook
     t = transkript(tmp_path / "t.jsonl", [("user", "Hmm, ich weiß nicht."), ("assistant", "Dann so.")])
     aus = hook("stop_check.py", {"session_id": "s1", "transcript_path": str(t)})
-    assert aus["decision"] == "block" and "zuruecknehmen" in aus["reason"]
+    assert "zuruecknehmen" in blockiert(aus)
     pl.zuruecknehmen("os")
     assert hook("stop_check.py", {"session_id": "s1", "transcript_path": str(t)}) is None
 

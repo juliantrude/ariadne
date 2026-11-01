@@ -37,7 +37,7 @@ def test_einrichten_legt_lernrepo_an_und_ueberschreibt_nichts(tmp_path):
 
 def test_hooks_schweigen_ausserhalb_eines_lernrepos(tmp_path):
     env = {k: v for k, v in os.environ.items() if not k.startswith("ARIADNE_")}
-    for name in ("session_start.py", "stop_check.py", "guard_learner.py", "aktivitaet.py"):
+    for name in ("session_start.py", "stop_check.py", "guard_learner.py", "aktivitaet.py", "anzeige.py"):
         r = subprocess.run([sys.executable, str(HOOKS / name)], input=json.dumps(
             {"session_id": "x", "tool_name": "Write", "tool_input": {"file_path": "learner/x"},
              "last_assistant_message": '⟦"erfunden" | a.pdf S. 1⟧'}),

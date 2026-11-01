@@ -1,6 +1,6 @@
 {
   "name": "ariadne",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Lerntutor für Claude Code, der den Weg kennt und ihn nicht verrät: Vorwissensanalyse mit dem Claude-Gedächtnis, verhandelter Lehrplan mit Meilensteinen, Hinweisleiter, FSRS-Wiederholung und Quellenprüfung jeder Antwort. Wirkt nur in Lern-Repos mit ariadne.toml.",
   "author": {"name": "Julian Trude"},
   "homepage": "https://github.com/juliantrude/ariadne",

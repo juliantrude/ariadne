@@ -1,5 +1,5 @@
 {
-  "description": "Ariadne: Lernstand beim Start, gemessene Lernzeit, Schreibschutz für das Lernermodell, Prüfkette für jede Antwort. Wirkt nur in Verzeichnissen mit einer ariadne.toml.",
+  "description": "Ariadne: Lernstand beim Start, gemessene Lernzeit, Schreibschutz für das Lernermodell, Prüfkette für jede Antwort, gezeigt wird nur die geprüfte Fassung. Wirkt nur in Verzeichnissen mit einer ariadne.toml.",
   "hooks": {
     "SessionStart": [
       {"hooks": [{"type": "command", "command": "uv run --quiet --project \"${CLAUDE_PLUGIN_ROOT}\" python \"${CLAUDE_PLUGIN_ROOT}/hooks/session_start.py\""}]}
@@ -10,6 +10,9 @@
     "PreToolUse": [
       {"matcher": "Edit|Write|MultiEdit|NotebookEdit|Bash",
        "hooks": [{"type": "command", "command": "uv run --quiet --project \"${CLAUDE_PLUGIN_ROOT}\" python \"${CLAUDE_PLUGIN_ROOT}/hooks/guard_learner.py\""}]}
+    ],
+    "MessageDisplay": [
+      {"hooks": [{"type": "command", "timeout": 250, "command": "uv run --quiet --project \"${CLAUDE_PLUGIN_ROOT}\" python \"${CLAUDE_PLUGIN_ROOT}/hooks/anzeige.py\""}]}
     ],
     "Stop": [
       {"hooks": [{"type": "command", "timeout": 240, "command": "uv run --quiet --project \"${CLAUDE_PLUGIN_ROOT}\" python \"${CLAUDE_PLUGIN_ROOT}/hooks/stop_check.py\""}]}

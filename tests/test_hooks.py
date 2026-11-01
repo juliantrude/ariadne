@@ -2,7 +2,7 @@
 import json
 from pathlib import Path
 
-from conftest import hook, seiten, transkript
+from conftest import blockiert, hook, seiten, transkript
 from kern import pruefer
 from kern.transkript import letzte_antwort, nutzer_eingaben
 
@@ -19,7 +19,7 @@ def test_t1_im_stop_hook_mit_transkript(repo, tmp_path):
     seiten(repo, "skript.pdf", [SEITE])
     t = transkript(tmp_path / "t.jsonl", [("user", "Frage"), ("assistant", '⟦"TLB stores data" | skript.pdf S. 1⟧')])
     aus = hook("stop_check.py", {"session_id": "s1", "transcript_path": str(t)})
-    assert aus["decision"] == "block" and "Zitat nicht gefunden" in aus["reason"]
+    assert "Zitat nicht gefunden" in blockiert(aus)
 
 
 def test_echtes_zitat_geht_durch(repo):
@@ -37,12 +37,12 @@ def test_t11_pruefaufruf_loest_keine_hooks_aus(repo):
 def test_t11_hoechstens_zwei_korrekturrunden(repo):
     seiten(repo, "skript.pdf", [SEITE])
     ev = {"session_id": "s1", "last_assistant_message": '⟦"erfunden" | skript.pdf S. 1⟧'}
-    assert hook("stop_check.py", {**ev, "stop_hook_active": False})["decision"] == "block"
-    assert hook("stop_check.py", {**ev, "stop_hook_active": True})["decision"] == "block"
+    assert blockiert(hook("stop_check.py", {**ev, "stop_hook_active": False}))
+    assert blockiert(hook("stop_check.py", {**ev, "stop_hook_active": True}))
     dritte = hook("stop_check.py", {**ev, "stop_hook_active": True})
-    assert "decision" not in dritte and dritte["systemMessage"].startswith("⚠ Beleg prüfen")
+    assert not blockiert(dritte) and dritte["systemMessage"].startswith("⚠ Beleg prüfen")
     # neue Nutzereingabe: Zähler beginnt von vorn
-    assert hook("stop_check.py", {**ev, "stop_hook_active": False})["decision"] == "block"
+    assert blockiert(hook("stop_check.py", {**ev, "stop_hook_active": False}))
 
 
 def test_pruefer_eskaliert_bei_unklar(repo):

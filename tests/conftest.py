@@ -46,6 +46,11 @@ def hook(name: str, ereignis: dict, **env) -> dict | None:
     return json.loads(r.stdout) if r.stdout.strip() else None
 
 
+def blockiert(ausgabe: dict | None) -> str | None:
+    """Die Rückmeldung des Stop-Hooks an das Modell, None wenn er nicht blockiert."""
+    return (ausgabe or {}).get("hookSpecificOutput", {}).get("additionalContext")
+
+
 def transkript(pfad: Path, verlauf: list[tuple[str, str]]) -> Path:
     """Schreibt ein Transkript im Format von Claude Code 2.1 (siehe tests/fixtures/transkript_2_1.jsonl)."""
     zeilen = []

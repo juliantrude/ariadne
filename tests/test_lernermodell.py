@@ -2,7 +2,7 @@
 import json
 
 import pytest
-from conftest import hook
+from conftest import blockiert, hook
 from fsrs import Rating
 
 from kern import lernermodell as lm
@@ -90,7 +90,7 @@ def test_t6_stufe_4_ohne_termin_blockiert(tlb, tmp_path):
     konzepte["os.vm.tlb"].pop("pflicht_termin")  # simuliert: Termin ging verloren
     (tlb / "learner" / "konzepte.json").write_text(json.dumps(konzepte))
     aus = hook("stop_check.py", {"session_id": "s1", "last_assistant_message": "Gut, weiter."})
-    assert aus["decision"] == "block" and "Wiederholungspflicht" in aus["reason"]
+    assert "Wiederholungspflicht" in blockiert(aus)
 
 
 def test_t6_mit_termin_kein_block(tlb):

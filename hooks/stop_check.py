@@ -5,6 +5,7 @@
 ③ Wiederholungspflicht nach Stufe 4
 ④ Ein als vereinbart eingetragener Lehrplan hat eine wörtliche Zustimmung des Lernenden im Gespräch
 Höchstens zwei Korrekturrunden, danach sichtbare Warnung statt Endlosschleife (T11).
+Das Urteil geht auch an den Anzeige-Hook: Eine blockierte Antwort bekommt der Lernende nie zu sehen.
 """
 import json
 import os
@@ -15,6 +16,7 @@ from _pfad import DATEN, aus, ereignis
 if aus():
     sys.exit(0)
 
+from kern import anzeige  # noqa: E402
 from kern import lernermodell as lm  # noqa: E402
 from kern import pruefer  # noqa: E402
 from kern.basis import jetzt, lies_json, protokoll, schreib_json, sitzungs_ordner  # noqa: E402
@@ -56,12 +58,8 @@ def zustimmung_fehlt(sid: str, transcript: str) -> list[str]:
     return fehler
 
 
-def main() -> None:
-    ev = ereignis()
-    sid = ev.get("session_id", "ohne-sitzung")
-    os.environ.setdefault("ARIADNE_SESSION", sid)
-    antwort = ev.get("last_assistant_message") or letzte_antwort(ev.get("transcript_path", ""))
-
+def pruefe_antwort(ev: dict, sid: str, antwort: str) -> bool:
+    """Gibt die Hook-Ausgabe aus. True, wenn die Antwort gezeigt werden darf."""
     fehler, zitate = pruefe_zitate(antwort)
     fehler += pruefe_laeufe(antwort, sid)
     urteil = None
@@ -83,10 +81,11 @@ def main() -> None:
     if fehler and runde < MAX_RUNDEN:
         runden[sid] = runde + 1
         schreib_json(runden_pfad, runden)
-        print(json.dumps({"decision": "block",
-                          "reason": "Ariadne-Prüfung fehlgeschlagen, bitte korrigieren:\n- " + "\n- ".join(fehler)},
+        print(json.dumps({"hookSpecificOutput": {"hookEventName": "Stop", "additionalContext": (
+            "Ariadne-Prüfung fehlgeschlagen. Der Lernende hat diese Antwort nicht gesehen: Gib sie vollständig "
+            "und korrigiert noch einmal aus, ohne die Prüfung zu erwähnen.\n- " + "\n- ".join(fehler))}},
                          ensure_ascii=False))
-        return
+        return False
     runden.pop(sid, None)
     schreib_json(runden_pfad, runden)
     if fehler:
@@ -95,6 +94,21 @@ def main() -> None:
     elif urteil and urteil["gesamt"] == "unklar":
         print(json.dumps({"systemMessage": f"⚠ Beleg prüfen: Prüfer ({urteil.get('modell')}) war unsicher."},
                          ensure_ascii=False))
+    return True
+
+
+def main() -> None:
+    ev = ereignis()
+    sid = ev.get("session_id", "ohne-sitzung")
+    os.environ.setdefault("ARIADNE_SESSION", sid)
+    gezeigt = ev.get("last_assistant_message") or ""
+    antwort = gezeigt or letzte_antwort(ev.get("transcript_path", ""))
+    anzeige.stop_beginnt(DATEN, sid, gezeigt)
+    zeigen = True
+    try:
+        zeigen = pruefe_antwort(ev, sid, antwort)
+    finally:
+        anzeige.stop_entscheidet(DATEN, sid, gezeigt, zeigen)
 
 
 main()
