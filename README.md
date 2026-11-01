@@ -17,7 +17,7 @@
 Generative KI kann Lernen messbar verschlechtern. Sie kann es auch messbar verbessern.
 Welcher Fall eintritt, entscheidet nicht das Modell, sondern das Design drumherum.
 
-**Ariadne** ist ein Tutor Agent, der die Lernmethoden, dessen Wirkung am besten wissenschaftlich belegt ist, konsequent umsetzt. 
+**Ariadne** ist ein Tutor-Agent, der die Lernmethoden, deren Wirkung wissenschaftlich am besten belegt ist, konsequent umsetzt.
 
 ## Lizenz und Bild
 
@@ -47,8 +47,8 @@ Selbsterklärung, sofortiges Feedback, verschachteltes Üben
 
 ## Das Prinzip: das Labyrinth
 
-LLMs haben heutzutage ein imenese Fachwissen. Ein Tutor, der mehr weiß als der Schüler, steht aber vor einem Problem: Er kennt die Antwort, aber gerade
-die Antwort darf er nicht geben, sonst hätte der Schüler nichts gelernt. Im Grieschichen Mythos gibt Ariadne Theseus einen Faden. Durch das Labyrinth gehen
+LLMs haben heutzutage ein immenses Fachwissen. Ein Tutor, der mehr weiß als der Schüler, steht aber vor einem Problem: Er kennt die Antwort, aber gerade
+die Antwort darf er nicht geben, sonst hätte der Schüler nichts gelernt. Im griechischen Mythos gibt Ariadne Theseus einen Faden. Durch das Labyrinth gehen
 muss er selbst.
 
 <p align="center">
@@ -57,9 +57,9 @@ muss er selbst.
 
 Die Denkarbeit bleibt beim Lernenden: generieren, abrufen, selbst erklären.
 Ariadne übernimmt Steuerung und Rückmeldung: passende Aufgaben, dosierte Hinweise, sofortiges Feedback,
-geplante Wiederholung, sichtbar gemachte Fehlvorstellungen. Dabei "lockt" er den Schüler geziehlt in Richtung Erkenntnis, die er sich aber immernoch selber erarbeitet. 
+geplante Wiederholung, sichtbar gemachte Fehlvorstellungen. Dabei „lockt“ sie den Schüler gezielt in Richtung Erkenntnis, die er sich aber immer noch selbst erarbeitet.
 
-Lehrreiche Sackgassen lässt Ariadne zu, unproduktive entschärft er früh. Wo immer möglich, widerlegt nicht
+Lehrreiche Sackgassen lässt Ariadne zu, unproduktive entschärft sie früh. Wo immer möglich, widerlegt nicht
 die KI einen Irrtum, sondern die Maschine: Vorhersage aufschreiben, Code ausführen, vergleichen.
 
 ## Struktur gehört in Code, nicht in den Prompt
@@ -257,6 +257,5 @@ pruefer-validierung/   Testpaare für den Prüfer (T7)
 | Plugin: Lern-Repo finden, einrichten, Hooks nur im Lern-Repo, Nebel-Meilensteine | grün (`test_plugin`); echte Sitzung: Regeln eingespielt, Skill als Slash-Befehl mit Werkzeugaufruf ohne Rückfrage |
 
 </details>
-
 
 Concept & Architecture: Julian Trude. Authored with Claude Opus 5.5.
