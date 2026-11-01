@@ -253,7 +253,8 @@ pruefer-validierung/   Testpaare für den Prüfer (T7)
 
 ## Lizenz und Bild
 
-Der Code und das Konzept stehen unter der [MIT-Lizenz](LICENSE). Das Titelbild zeigt ein Gemälde von Niccolò
-Bambini († 1736) und ist gemeinfrei.
+Der Code steht unter der [MIT-Lizenz](LICENSE). Das Konzept in `konzept/` mit PDF, HTML-Fassung und den beiden
+Abbildungen steht unter [CC BY 4.0](konzept/LICENSE). Das Titelbild zeigt ein Gemälde von Niccolò Bambini († 1736)
+und ist gemeinfrei.
 
 Concept & Architecture: Julian Trude. Authored with Claude Opus 5.5.

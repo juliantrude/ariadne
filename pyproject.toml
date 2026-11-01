@@ -1,6 +1,6 @@
 [project]
 name = "ariadne"
-version = "0.2.1"
+version = "0.2.2"
 description = "Lernagent auf Basis von Claude Code: kennt den Weg, verrät ihn nicht."
 requires-python = ">=3.12"
 dependencies = ["fsrs>=6.3"]
