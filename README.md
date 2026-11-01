@@ -1,60 +1,151 @@
-# Ariadne
+<p align="center">
+  <img src="konzept/bild.png" alt="Ariadne reicht Theseus den Faden" width="640">
+</p>
+<p align="center"><sub>Niccolò Bambini: <i>Ariadne und Theseus</i></sub></p>
 
-Lernagent auf Basis von Claude Code: kennt den Weg, verrät ihn nicht.
-Konzept und Begründung: `konzept/ariadne-lernagent-konzept.pdf`. Dieses Repo ist das Plugin, Version 0.2.
+<h1 align="center">Ariadne</h1>
 
-## Architektur
+<p align="center"><b>Ein Lerntutor für Claude Code, der den Weg kennt und ihn trotzdem nicht verrät.</b></p>
 
-Ariadne ist ein Claude-Code-Plugin. Code und Lerndaten sind getrennt:
+<p align="center">
+  <a href="konzept/ariadne-lernagent-konzept.pdf">Konzept (PDF, 33 Seiten)</a> ·
+  <a href="#so-läuft-das-lernen-ab">Ablauf</a> ·
+  <a href="#einrichten">Einrichten</a> ·
+  <a href="#grenzen">Grenzen</a>
+</p>
 
-```
-~/Work/ariadne/                 Plugin (dieses Repo): Regeln, Skills, Hooks, Werkzeuge
-└─ installiert als Kopie nach ~/.claude/plugins/cache/ariadne/…  (der Tutor kann sie nicht nebenbei ändern)
+Generative KI kann Lernen messbar verschlechtern. Sie kann es auch messbar verbessern.
+Welcher Fall eintritt, entscheidet nicht das Modell, sondern das Design drumherum.
+Ariadne ist ein Entwurf, der konsequent auf der richtigen Seite dieser Linie gebaut ist.
 
-<dein Lern-Repo>/               Daten, eigenes Git-Repo
-├─ ariadne.toml                 Marker + persönliche Einstellungen
-├─ .claude/settings.json        aktiviert das Plugin nur hier
-├─ learner/ material/ sitzungen/ .tutor/karten/
-```
+## Warum Ariadne
 
-Das Plugin ist für den Nutzer installiert, aber global deaktiviert. Jedes Lern-Repo aktiviert es in seinen
-Projekteinstellungen. Zusätzlich schweigen die Hooks überall, wo keine `ariadne.toml` liegt.
-Die Tutor-Regeln (`regeln.md`) spielt der SessionStart-Hook ein, weil ein Plugin keine CLAUDE.md mitbringen kann.
+**Die Krücke.** In einem Feldexperiment mit knapp tausend Schülern verbesserte ungebremster
+GPT-4-Zugang die Übungsnoten um 48 %. In der Prüfung ohne KI schnitten dieselben Schüler danach
+17 % schlechter ab als Schüler, die nie KI hatten. Eine Variante, die Hinweise statt Lösungen gab,
+hob diesen Schaden weitgehend auf. Beide Gruppen nutzten dasselbe Modell
+([Bastani et al. 2025](https://doi.org/10.1073/pnas.2422633122)).
 
-## Einrichten
+**Die Gegenprobe.** Ein didaktisch gebauter KI-Tutor brachte Harvard-Studierenden im Median mehr als
+den doppelten Lernzuwachs von gutem, aktivem Präsenzunterricht, in 49 statt 60 Minuten. Ein Systemprompt
+allein reichte dafür nicht: Die Plattform musste die Struktur erzwingen
+([Kestin et al. 2025](https://doi.org/10.1038/s41598-025-97652-6)).
 
-```bash
-# einmalig: Plugin aus dem lokalen Marktplatz installieren, global aus
-claude plugin marketplace add ~/Work/ariadne
-claude plugin install ariadne@ariadne --scope user
-claude plugin disable ariadne@ariadne --scope user
+Die Frage lautet also nicht „KI ja oder nein“, sondern „welches Design“.
 
-# Lern-Repo anlegen (eins pro Person, kursübergreifend)
-~/Work/ariadne/bin/ariadne einrichten ~/Documents/uni/ariadne
-cd ~/Documents/uni/ariadne && claude
-> /ariadne:einlesen material/os/skript.pdf
-> /ariadne:kapitel
-```
+Ariadne erfindet dabei kein neues Lernen. Sie macht die Techniken billig, deren Wirksamkeit am besten
+belegt ist, die Studierende aber kaum nutzen, weil sie mühsam sind: Abrufübung, verteiltes Wiederholen,
+Selbsterklärung, sofortiges Feedback, verschachteltes Üben
+([Dunlosky et al. 2013](https://doi.org/10.1177/1529100612453266)).
 
-Voraussetzungen: Claude Code mit Abo, `uv`, `pdftotext` (poppler), `git`; für Low-Level-Experimente `gcc`, `gdb`, `perf`.
+## Das Prinzip: das Labyrinth
 
-## Entwickeln
+Ein Tutor, der mehr weiß als der Lernende, steht vor einem Paradox: Er kennt die Antwort, aber gerade
+die Antwort darf er nicht geben. Im Mythos gibt Ariadne Theseus einen Faden. Durch das Labyrinth gehen
+muss er selbst.
 
-```bash
-uv run pytest                                      # 60 Tests, ohne Modellaufruf
-claude --plugin-dir ~/Work/ariadne                 # im Lern-Repo: Arbeitsstand ohne Installation testen
-# Neue Version ausrollen: version in .claude-plugin/plugin.json erhöhen, dann
-claude plugin marketplace update ariadne && claude plugin update ariadne@ariadne
-```
+<p align="center">
+  <img src="konzept/labyrinth.png" alt="Labyrinth mit Ariadnes Faden, lehrreichen und unproduktiven Sackgassen" width="760">
+</p>
 
-## Ablauf
+Die Denkarbeit bleibt beim Lernenden: generieren, abrufen, selbst erklären.
+Ariadne übernimmt Steuerung und Rückmeldung: passende Aufgaben, dosierte Hinweise, sofortiges Feedback,
+geplante Wiederholung, sichtbar gemachte Fehlvorstellungen.
+
+Lehrreiche Sackgassen lässt sie zu, unproduktive entschärft sie früh. Wo immer möglich, widerlegt nicht
+die KI einen Irrtum, sondern die Maschine: Vorhersage aufschreiben, Code ausführen, vergleichen.
+
+## Struktur gehört in Code, nicht in den Prompt
+
+Das ist die wichtigste Designentscheidung. Was zwingend gelten muss, ist keine Bitte an das Modell,
+sondern wird von Hooks und Skripten durchgesetzt. Zahlen zu Aufwand, Terminen, Bestehen und Beherrschung
+stehen in Python, das Modell meldet nur Beobachtungen. Alles liegt als Klartext in einem Git-Repo, jede
+Änderung am Lernermodell ist ein Commit. Man muss Ariadne nicht vertrauen, man kann nachsehen.
+
+## Was Ariadne kann
+
+### Hinweisleiter statt Lösung
+
+<p align="center">
+  <img src="konzept/hinweisleiter.png" alt="Hinweisleiter: eigener Versuch, dann Rückfrage, Hinweis, Teillösung, volle Erklärung" width="760">
+</p>
+
+Jede Schlüsselstelle beginnt mit einem eigenen Versuch. Hilfe kommt stufenweise, nach einem Erfolg geht es
+zurück auf Stufe 1, und wer das Zeitbudget überschreitet, steigt eine Stufe auf. „Gib mir einfach die Lösung“
+funktioniert immer, wird aber protokolliert, zählt als Stufe 4 und erscheint in der Bilanz. Nach Stufe 4
+prüft der Stop-Hook, dass die Wiederholung eingeplant ist.
+
+### Lösungslandkarte
+
+Vor jeder Aufgabe legt Ariadne eine Karte an: Schlüsseleinsichten, typische Fehlvorstellungen, Zeitfallen,
+gebunden an das Kursmaterial. Daher kennt sie den Weg, ohne ihn im Gespräch zu erfinden.
+
+### Quellenprüfung jeder Antwort
+
+Jede fachliche Aussage trägt eine Belegklasse:
+
+| Klasse | Form in der Antwort | Bedeutung |
+|---|---|---|
+| belegt | `⟦"wörtliches Zitat" \| skript.pdf S. 112⟧` | steht wörtlich auf dieser Seite im Material |
+| ausgeführt | `⟦lauf: r3⟧` | durch einen protokollierten Lauf geprüft |
+| unbelegt | `⟦unbelegt⟧` | Modellwissen, im Text so benannt |
+
+Nach jeder Antwort läuft die Prüfkette. Zuerst vergleicht Python jedes Zitat mit dem Text der angegebenen
+Seite: Ein erfundenes Zitat kommt nicht durch, eine Seite ohne prüfbaren Text gilt als „nicht prüfbar“,
+nie als „ok“. Danach prüft ein günstiges Zweitmodell (Haiku 5.5) ohne Kenntnis des Gesprächs, ob das Zitat
+die Aussage stützt und ob unbelegte Aussagen unmarkiert geblieben sind. Bei „unklar“ eskaliert es an
+Sonnet 5.5. Der Hook blockiert fehlerhafte Antworten für höchstens zwei Korrekturrunden; danach erscheint
+eine sichtbare Warnung.
+
+### Lernermodell, das sich nicht schönschreibt
+
+Ein Sprachmodell bewertet Fortschritt gern freundlich. Deshalb blockiert ein Hook jedes direkte Schreiben
+in `learner/`. Beherrschung und Wiederholungstermine leitet ein Skript aus beobachtbaren Fakten ab, aus
+erreichter Hinweisstufe und Abrufergebnis. Vor jeder Abruffrage nennt der Lernende seine Sicherheit von
+1 bis 5, die Bilanz stellt Selbsteinschätzung und Trefferquote gegenüber. So wird die Kompetenzillusion
+sichtbar.
+
+### Vorwissensanalyse
+
+Ariadne liest das vorhandene Claude-Code-Gedächtnis, nur lesend, als Hypothesen darüber, was abgefragt
+werden sollte. Den Startstand setzen allein Diagnosefragen über feste Regeln: richtig ergibt Beherrschung 2,
+nie mehr. Gesperrte Projekte und Gedächtnistypen stehen in `ariadne.toml`.
+
+### Verhandelter Lehrplan
+
+Das Modell gliedert didaktisch, `plan.py` rechnet: Aufwand pro Konzept, Zuschläge für Wiederholung und Puffer,
+Termine aus Wochenstunden und Energie, Machbarkeit bis zum Zieldatum. Sagt der Plan „nicht machbar“, wird über
+Umfang, Zeit oder Ziel verhandelt, nicht über die Zahlen. Vereinbart ist ein Plan erst mit der wörtlichen
+Zustimmung des Lernenden, und der Stop-Hook prüft sie gegen das Gesprächsprotokoll.
+
+### Meilensteine und messbarer Fortschritt
+
+Jeder Meilenstein hat eine Prüfung, bestanden ab einer festen Schwelle (Standard 80 %). Nur der nächste
+Meilenstein ist scharf geplant, spätere liegen im Nebel (Idee aus Matt Pococks Wayfinder), bis man weiß, was
+wirklich sitzt. `/ariadne:fortschritt` zeigt Ist gegen Soll, den Rückstand in Tagen und die gemessene
+Lernzeit. Bei größerem Rückstand schlägt Ariadne eine Neuverhandlung vor.
+
+### Wiederholung, Klausur, Paper
+
+Der FSRS-Algorithmus plant Wiederholungen genau dann, wenn das Vergessen einsetzt, und abgefragt wird durch
+Abruf, nie durch erneutes Lesen. Die Klausursimulation mischt Themen und gibt währenddessen keine Hilfe.
+Im Forschungsmodus seziert Ariadne Paper mit dir: Fragestellung, Design, Statistik, Aussagekraft.
+Literatur sucht sie ausdrücklich nicht, das können Suchmaschinen besser.
+
+### Was Ariadne nie tut
+
+Keine Lösung vor einem eigenen Versuch. Keine Suggestivfragen. Keine bewerteten Abgaben. Kein Urteil über die
+Person statt über den Lösungsweg. Keine Literatur, die nicht im Material liegt. Keine Änderung an den eigenen
+Regeln.
+
+## So läuft das Lernen ab
 
 ```
 /ariadne:einrichten                  neues Lern-Repo
 /ariadne:einlesen <pdf>              Material zerlegen, Konzepte bestätigen
 /ariadne:kapitel                     neues Lernvorhaben: Ziel, Konzepte
-  └ /ariadne:vorwissen               Gedächtnis + Lernermodell als Hypothesen, Diagnosefragen
-  └ /ariadne:plan                    Lehrplan, Zeitplan verhandeln, vereinbaren; später Meilensteine schärfen
+  └ /ariadne:vorwissen               Gedächtnis als Hypothesen, Diagnosefragen
+  └ /ariadne:plan                    Lehrplan und Zeitplan verhandeln, vereinbaren
 /ariadne:lernen <konzept>            Hinweisleiter, Lösungslandkarte, /ariadne:vorhersage
 /ariadne:wiederholen                 FSRS, täglich
 /ariadne:meilenstein <kapitel> <M>   Zwischenprüfung oder Challenge, messbar
@@ -63,46 +154,86 @@ claude plugin marketplace update ariadne && claude plugin update ariadne@ariadne
 /ariadne:klausur  /ariadne:paper     Klausursimulation, Forschungsmodus
 ```
 
-## Neu gegenüber dem Konzept
+## Einrichten
 
-**Vorwissensanalyse** (`/vorwissen`, `tools/gedaechtnis.py`). Liest nur lesend das Claude-Code-Gedächtnis
-(`~/.claude/projects/*/memory`): Einträge über die Person immer, andere nur bei Treffer auf die Stichworte
-des Kapitels. Gesperrte Projekte und Typen in `ariadne.toml`. Das Gedächtnis liefert Hypothesen und
-bestimmt, *was* abgefragt wird. Den Startstand setzen nur Diagnosefragen, über feste Regeln in `lm.py`:
-richtig → Beherrschung 2 (nie höher, Kompetenzillusion), teilweise → 1, falsch/übersprungen → 0.
-Welche Gedächtniseinträge genutzt wurden, steht im Kapitel.
+Voraussetzungen: Claude Code mit Abo, Linux, macOS oder WSL2, `git`, [`uv`](https://docs.astral.sh/uv/) und
+`pdftotext` (poppler). Für Low-Level-Experimente zusätzlich `gcc`, `gdb` und `perf`.
+Ariadne spricht Deutsch. Das Konzept ist auf Opus 5.5 als Tutor ausgelegt; es läuft das Modell der Sitzung.
 
-**Lehrplan mit verhandeltem Zeitplan** (`/plan`, `tools/plan.py`). Das Modell gliedert didaktisch in
-Meilensteine, `plan.py` rechnet: Aufwand pro Konzept aus der Startbeherrschung, Zuschläge für
-Wiederholung und Puffer, Termine aus Stunden pro Woche und aus der Energie (begrenzt neue Konzepte
-pro Sitzung), Machbarkeit bis zum Zieldatum mit Hebeln (nötige Stunden, was bis zum Ziel passt).
-Kein Plan ohne Vorwissensanalyse. Vereinbart ist ein Plan erst mit der wörtlichen Zustimmung des
-Lernenden; `plan.py` und der Stop-Hook prüfen sie gegen das Gesprächsprotokoll.
+```bash
+# einmalig: Plugin installieren und global ausschalten, es wirkt nur in Lern-Repos
+claude plugin marketplace add juliantrude/ariadne
+claude plugin install ariadne@ariadne --scope user
+claude plugin disable ariadne@ariadne --scope user
 
-**Meilensteine und messbarer Fortschritt** (`/meilenstein`, `/fortschritt`). Jeder Meilenstein hat eine
-Prüfung: Zwischenprüfung (jedes Konzept ein Abruf ohne Hilfe) oder Challenge mit festen Kriterien,
-bestanden ab Schwelle (Standard 80 %). Prüfungsitems zählen zugleich als Abruf im Lernermodell.
-Nur der nächste Meilenstein ist scharf geplant. Spätere liegen im Nebel (Idee aus Matt Pococks Wayfinder):
-Konzepte und Termine stehen, die Prüfung wird erst geschärft (`ariadne plan schaerfen`), wenn der vorige bestanden ist.
-Fortschritt: Ist (aus Beherrschung, gewichtet mit Aufwand) gegen Soll (aus dem Plan), Rückstand in Tagen,
-gemessene aktive Lernzeit gegen vereinbarte. Bei Rückstand ≥ 7 Tagen, verpasstem Meilenstein oder
-< 60 % Lernzeit empfiehlt der SessionStart-Hook eine Neuverhandlung; bestandene Meilensteine bleiben erhalten.
+# Lern-Repo anlegen: eins pro Person, kursübergreifend
+~/.claude/plugins/marketplaces/ariadne/bin/ariadne einrichten ~/Documents/uni/ariadne
 
-## Aufbau des Plugins
-
-```
-.claude-plugin/             plugin.json, marketplace.json (lokaler Marktplatz)
-regeln.md                   Tutor-Regeln, per SessionStart eingespielt
-skills/                     14 Skills (/ariadne:<name>)
-hooks/                      hooks.json: SessionStart, UserPromptSubmit (Lernzeit), PreToolUse (Schreibschutz), Stop (Prüfkette)
-bin/ariadne                 ein Einstieg für alle Werkzeuge
-tools/                      lm plan review run ingest gedaechtnis einrichten validiere_pruefer; Logik in tools/kern/
-vorlage/                    Inhalt eines neuen Lern-Repos
-konzept/                    Konzept-PDF
-pruefer-validierung/        T7
+cd ~/Documents/uni/ariadne && claude
+> /ariadne:einlesen material/os/skript.pdf
+> /ariadne:kapitel
 ```
 
-## Stand der Tests
+Code und Lerndaten bleiben getrennt. Das Plugin enthält Regeln, Skills, Hooks und Werkzeuge. Das Lern-Repo ist
+ein eigenes Git-Repo mit `ariadne.toml`, `learner/`, `material/` und `sitzungen/`, und seine
+`.claude/settings.json` aktiviert das Plugin nur dort. Außerhalb eines Lern-Repos schweigen die Hooks.
+
+## Grenzen
+
+- **Ariadne ist nicht empirisch untersucht.** Das Konzept begründet, warum sie plausibel wirkt, nicht dass sie
+  wirkt. Die Kernstudien stammen aus Schulmathematik und Einführungsphysik und messen überwiegend kurzfristig.
+  Wer es bei sich prüfen will, findet in Abschnitt 7.7 des Konzepts einen Selbstversuch.
+- **Hart garantiert ist nur die Existenz eines Zitats.** Ob es die Aussage stützt, prüft ein Modell, also nie
+  mit Sicherheit. Der Prüfer ist bisher nur an 5 konstruierten Beispielpaaren gelaufen (100 % erkannt, 0 %
+  Fehlalarme). Die vorgesehene Validierung mit 50 Paaren aus echtem Material und die 10 begleiteten
+  Didaktik-Sitzungen stehen noch aus.
+- **Daten gehen an Anthropic.** Ariadne läuft lokal, die Modellaufrufe nicht, und mit ihnen Auszüge aus dem
+  Material. Vor dem Einlesen klären, ob die Hochschule das erlaubt. Keine personenbezogenen Daten Dritter ins
+  Material.
+- **Verbrauch.** Jede Antwort mit Fachaussagen startet zusätzlich einen Prüfaufruf, der aufs Abo zählt.
+- **Keine Sandbox.** `run.py` führt Code ohne Isolation aus. Schreibschutz und Hooks sind Leitplanken gegen
+  Versehen, keine Sicherheitsgrenze.
+- **Lernzeit ist geschätzt** aus Eingabe-Zeitstempeln, Pausen über 15 Minuten zählen nicht, und nicht pro
+  Kapitel getrennt. Die Aufwandsschätzung ist ein Startwert, den man nach einigen Wochen nachjustiert.
+- **Meilenstein-Items beurteilt das Modell**, über Bestehen entscheidet die Schwelle in `plan.py`.
+- **Skills:** Ruft das Modell einen Skill selbst auf, kam im Headless-Test der Inhalt nicht an, als Slash-Befehl
+  funktioniert er. Die Regeln enthalten dafür einen Rückfallweg.
+
+## Konzept und Plugin
+
+Das [Konzept](konzept/ariadne-lernagent-konzept.pdf) führt jedes Designelement auf einen Lernmechanismus zurück
+und jeden Mechanismus auf veröffentlichte Studien, mit markierter Belegstärke und 29 Quellen. Es ist der
+ursprüngliche Entwurf vom Oktober 2026. Das Plugin weicht an drei Stellen davon ab: Der Aufbau ist heute ein
+Plugin mit getrenntem Lern-Repo statt eines einzelnen Repos, die Eskalation läuft über Sonnet 5.5 statt Sonnet 5,
+und Vorwissensanalyse, verhandelter Lehrplan und Meilensteine sind neu dazugekommen.
+
+## Entwickeln
+
+```bash
+uv run pytest                          # ohne Modellaufruf
+claude --plugin-dir <pfad-zu-diesem-repo>   # im Lern-Repo: Arbeitsstand ohne Installation testen
+```
+
+Eine neue Version braucht eine erhöhte `version` in `.claude-plugin/plugin.json`, danach:
+
+```bash
+claude plugin marketplace update ariadne && claude plugin update ariadne@ariadne
+```
+
+```
+.claude-plugin/        plugin.json, marketplace.json
+regeln.md              Tutor-Regeln, per SessionStart eingespielt
+skills/                14 Skills (/ariadne:<name>)
+hooks/                 SessionStart, UserPromptSubmit (Lernzeit), PreToolUse (Schreibschutz), Stop (Prüfkette)
+bin/ariadne            ein Einstieg für alle Werkzeuge
+tools/                 lm plan review run ingest gedaechtnis einrichten validiere_pruefer; Logik in tools/kern/
+vorlage/               Inhalt eines neuen Lern-Repos
+konzept/               Konzept-PDF, Abbildungen
+pruefer-validierung/   Testpaare für den Prüfer (T7)
+```
+
+<details>
+<summary>Stand der Tests (Nummern wie im Konzept, Abschnitt 8.5)</summary>
 
 | Test | Stand |
 |---|---|
@@ -118,11 +249,11 @@ pruefer-validierung/        T7
 | Vorwissen, Plan, Verhandlung, Meilensteine, Fortschritt, Lernzeit | grün (`test_planung`, `test_gedaechtnis`) |
 | Plugin: Lern-Repo finden, einrichten, Hooks nur im Lern-Repo, Nebel-Meilensteine | grün (`test_plugin`); echte Sitzung: Regeln eingespielt, Skill als Slash-Befehl mit Werkzeugaufruf ohne Rückfrage |
 
-## Grenzen dieser Version
+</details>
 
-- Lernzeit ist geschätzt aus Eingabe-Zeitstempeln (Pausen > 15 min zählen nicht) und nicht pro Kapitel getrennt.
-- Die Aufwandsschätzung (`aufwand_min`) ist ein Startwert. Nach einigen Wochen gegen die gemessene Zeit nachjustieren.
-- `run.py` hat keine Sandbox.
-- Schreibschutz und Hooks sind Leitplanken gegen Versehen, keine Sicherheitsgrenze.
-- Ruft das Modell einen Skill selbst über das Skill-Werkzeug auf, kam im Headless-Test der Inhalt nicht an; als Slash-Befehl funktioniert er. Die Regeln enthalten dafür einen Rückfallweg (SKILL.md direkt lesen). Im interaktiven Betrieb noch beobachten.
-- Ob ein Meilenstein-Item richtig ist, beurteilt das Modell; bestanden oder nicht entscheidet die Schwelle in `plan.py`.
+## Lizenz und Bild
+
+Der Code und das Konzept stehen unter der [MIT-Lizenz](LICENSE). Das Titelbild zeigt ein Gemälde von Niccolò
+Bambini († 1736) und ist gemeinfrei.
+
+Concept & Architecture: Julian Trude. Authored with Claude Opus 5.5.

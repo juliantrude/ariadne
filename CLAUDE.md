@@ -12,5 +12,5 @@ Die Hooks wirken nur in Lern-Repos; hier schweigen sie.
 - `konzept/` – Konzept-PDF; jede Regel muss sich darauf zurückführen lassen.
 
 Tests: `uv run pytest`. Zahlen (Aufwand, Termine, Bestehen, Beherrschung) gehören in Code, nie in Prompts.
-Zum Ausprobieren ohne Installation: `claude --plugin-dir ~/Work/ariadne` in einem Lern-Repo.
+Zum Ausprobieren ohne Installation: `claude --plugin-dir <pfad-zu-diesem-repo>` in einem Lern-Repo.
 Nach Änderungen an einer installierten Version: Version in `.claude-plugin/plugin.json` erhöhen, dann `claude plugin update ariadne@ariadne`.

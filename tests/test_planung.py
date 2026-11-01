@@ -23,7 +23,7 @@ def kapitel(repo):
 def vorwissen_erledigt():
     lm.vorwissen("os.vm.adresse", "richtig", sicherheit=4, selbst=3, kapitel="os")
     lm.vorwissen("os.vm.seitentabelle", "teilweise", sicherheit=3, selbst=3, kapitel="os")
-    pl.vorwissen_abschliessen("os", "Grundlagen da, Synchronisation neu.", ["Documents/uni/user-julian"])
+    pl.vorwissen_abschliessen("os", "Grundlagen da, Synchronisation neu.", ["Documents/uni/user-profil"])
 
 
 def test_neu_mit_praefix_und_unbekanntem_konzept(kapitel):
@@ -41,7 +41,7 @@ def test_vorwissen_haelt_startstand_und_luecken_fest(kapitel):
     vorwissen_erledigt()
     vw = pl.lade("os")["vorwissen"]
     assert vw["start_beherrschung"]["os.vm.adresse"] == 2 and vw["start_beherrschung"]["os.vm.seitentabelle"] == 1
-    assert "os.sync.mutex" in vw["ohne_diagnose"] and vw["gedaechtnis_genutzt"] == ["Documents/uni/user-julian"]
+    assert "os.sync.mutex" in vw["ohne_diagnose"] and vw["gedaechtnis_genutzt"] == ["Documents/uni/user-profil"]
 
 
 def test_vorschlag_rechnet_aufwand_und_termine(kapitel):

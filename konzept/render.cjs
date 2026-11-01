@@ -1,4 +1,4 @@
-const { chromium } = require('/home/julian/projects/final_lift/frontend/mobile/node_modules/playwright');
+const { chromium } = require('playwright');
 (async () => {
   const b = await chromium.launch();
   const p = await b.newPage();

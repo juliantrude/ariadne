@@ -29,7 +29,7 @@ def _meta(text: str) -> tuple[dict, str]:
 
 
 def _projekt(pfad: Path) -> str:
-    """~/.claude/projects/-home-julian-Documents-uni/memory/x.md -> Documents-uni"""
+    """~/.claude/projects/-home-name-Documents-uni/memory/x.md -> Documents-uni"""
     teile = pfad.parts
     if "projects" in teile:
         roh = teile[teile.index("projects") + 1]

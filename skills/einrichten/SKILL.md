@@ -8,7 +8,7 @@ allowed-tools:
    (das Lernermodell soll kursübergreifend wissen, was schon sitzt), z. B. `~/Documents/uni/ariadne`.
 2. `"${CLAUDE_PLUGIN_ROOT}/bin/ariadne" einrichten <verzeichnis>`
 3. Kurz erklären, was angelegt wurde, und auf `ariadne.toml` hinweisen: Dort steht, welche Teile
-   des Claude-Gedächtnisses die Vorwissensanalyse lesen darf. Gesperrt sind standardmäßig Gesundheit,
-   Camping und Garderobe. Bitten, das einmal anzusehen.
+   des Claude-Gedächtnisses die Vorwissensanalyse lesen darf. Gesperrt sind standardmäßig Projekte
+   mit „gesundheit“ oder „privat“ im Namen. Bitten, das einmal anzusehen und zu ergänzen.
 4. Hinweis: Ariadne wirkt nur in diesem Verzeichnis. Neue Claude-Code-Sitzung dort starten,
    dann `/ariadne:einlesen` für Material und `/ariadne:kapitel` für das erste Lernvorhaben.

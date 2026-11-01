@@ -5,7 +5,7 @@
 # Gelesen wird nur, nie geschrieben.
 quellen = ["~/.claude/CLAUDE.md", "~/.claude/projects/*/memory/*.md"]
 # Projekte, deren Gedächtnis Ariadne nie liest (Glob auf den Projektordner).
-ausschliessen = ["*gesundheit*", "*camping*", "*Garderobe*"]
+ausschliessen = ["*gesundheit*", "*privat*"]
 # Gedächtnistypen, die immer vollständig mitgelesen werden (user = über dich als Person). Alle anderen
 # nur, wenn sie zu den Stichworten des Kapitels passen.
 immer = ["user"]

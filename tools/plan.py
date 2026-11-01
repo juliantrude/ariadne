@@ -1,7 +1,7 @@
 """Kapitel, Lehrplan, Meilensteine, Fortschritt. Einziger Schreibweg nach learner/kapitel/.
 
   ariadne plan neu os "Betriebssysteme" --konzepte os. --ziel klausur --datum 2027-02-15 --stichwort Betriebssysteme
-  ariadne plan vorwissen-fertig os --zusammenfassung "..." --gedaechtnis "Documents/uni/user-julian-studienplanung"
+  ariadne plan vorwissen-fertig os --zusammenfassung "..." --gedaechtnis "Documents/uni/user-studienplanung"
   ariadne plan vorschlag os --stunden 5 --sitzungen 3 --energie mittel [--gliederung gliederung.json] [--notiz "..."]
   ariadne plan vereinbaren os --zustimmung "<wörtlicher Satz des Lernenden>"
   ariadne plan zuruecknehmen os       (fälschlich vereinbart -> wieder Entwurf)
