@@ -78,6 +78,26 @@ def test_session_start_meldet_sitzung_und_lage(repo, tmp_path):
     assert "/ariadne:kapitel" in aus["hookSpecificOutput"]["additionalContext"]
 
 
+def test_session_start_ruestet_eingabevorschlaege_ab(repo):
+    datei = repo / ".claude" / "settings.json"
+    datei.parent.mkdir(exist_ok=True)
+    datei.write_text(json.dumps({"enabledPlugins": {"ariadne@juliantrude": True}, "env": {"EIGENE": "1"}}))
+    hook("session_start.py", {"session_id": "abc"})
+    assert json.loads(datei.read_text()) == {
+        "enabledPlugins": {"ariadne@juliantrude": True},
+        "promptSuggestionEnabled": False,
+        "env": {"EIGENE": "1", "CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION": "false"},
+    }
+
+
+def test_session_start_laesst_kaputte_einstellungen_stehen(repo):
+    datei = repo / ".claude" / "settings.json"
+    datei.parent.mkdir(exist_ok=True)
+    datei.write_text("{ kaputt")
+    assert "Sitzungsstart" in hook("session_start.py", {"session_id": "abc"})["hookSpecificOutput"]["additionalContext"]
+    assert datei.read_text() == "{ kaputt"
+
+
 def test_aktivitaet_wird_gemessen(repo):
     hook("aktivitaet.py", {"session_id": "s1"})
     zeilen = (repo / "sitzungen" / "2026-11-02" / "aktivitaet.jsonl").read_text().splitlines()

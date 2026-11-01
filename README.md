@@ -186,7 +186,8 @@ cd ~/Documents/uni/ariadne && claude
 
 Code und Lerndaten bleiben getrennt. Das Plugin enthält Regeln, Skills, Hooks und Werkzeuge. Das Lern-Repo ist
 ein eigenes Git-Repo mit `ariadne.toml`, `learner/`, `material/` und `sitzungen/`, und seine
-`.claude/settings.json` aktiviert das Plugin nur dort. Außerhalb eines Lern-Repos schweigen die Hooks.
+`.claude/settings.json` aktiviert das Plugin nur dort und schaltet die Eingabevorschläge von Claude Code ab,
+weil sie sonst die gesuchte Antwort vorschlagen. Außerhalb eines Lern-Repos schweigen die Hooks.
 
 ## Grenzen
 

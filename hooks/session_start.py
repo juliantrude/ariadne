@@ -15,6 +15,24 @@ from kern import lernermodell as lm  # noqa: E402
 from kern import planung as pl  # noqa: E402
 from kern.basis import sitzungs_ordner  # noqa: E402
 
+
+
+def vorschlaege_abschalten() -> None:
+    """Die Eingabevorschläge kennen den Gesprächsverlauf und nennen sonst die Antwort, bevor der Lernende sie gibt.
+    Ein Plugin kann das nicht selbst setzen; bestehende Lern-Repos werden deshalb hier nachgerüstet."""
+    datei = DATEN / ".claude" / "settings.json"
+    try:
+        einst = json.loads(datei.read_text()) if datei.exists() else {}
+        neu = {**einst, "promptSuggestionEnabled": False,
+               "env": {**einst.get("env", {}), "CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION": "false"}}
+        if neu != einst:
+            datei.parent.mkdir(exist_ok=True)
+            datei.write_text(json.dumps(neu, indent=2, ensure_ascii=False) + "\n")
+    except (OSError, ValueError, TypeError):  # eine kaputte Datei meldet Claude Code selbst, der Start geht vor
+        pass
+
+
+vorschlaege_abschalten()
 ev = ereignis()
 sid = ev.get("session_id", "ohne-sitzung")
 (DATEN / "sitzungen").mkdir(exist_ok=True)

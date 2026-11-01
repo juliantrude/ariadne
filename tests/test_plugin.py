@@ -30,6 +30,8 @@ def test_einrichten_legt_lernrepo_an_und_ueberschreibt_nichts(tmp_path):
     assert "ariadne.toml" in neu and "CLAUDE.md" not in neu
     assert (ziel / "CLAUDE.md").read_text() == "meine Notizen"
     assert json.loads((ziel / ".claude" / "settings.json").read_text())["enabledPlugins"] == {"ariadne@juliantrude": True}
+    einst = json.loads((ziel / ".claude" / "settings.json").read_text())
+    assert einst["promptSuggestionEnabled"] is False and einst["env"]["CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION"] == "false"
     assert (ziel / "learner" / "kapitel").is_dir() and (ziel / ".git").is_dir()
     with pytest.raises(SystemExit):
         einrichten.einrichten(ziel)
