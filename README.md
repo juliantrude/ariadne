@@ -16,9 +16,16 @@
 
 Generative KI kann Lernen messbar verschlechtern. Sie kann es auch messbar verbessern.
 Welcher Fall eintritt, entscheidet nicht das Modell, sondern das Design drumherum.
-Ariadne ist ein Entwurf, der konsequent auf der richtigen Seite dieser Linie gebaut ist.
 
-## Warum Ariadne
+**Ariadne** ist ein Tutor Agent, der die Lernmethoden, dessen Wirkung am besten wissenschaftlich belegt ist, konsequent umsetzt. 
+
+## Lizenz und Bild
+
+Der Code steht unter der [MIT-Lizenz](LICENSE). Das Konzept in `konzept/` mit PDF, HTML-Fassung und den beiden
+Abbildungen steht unter [CC BY 4.0](konzept/LICENSE). Das Titelbild zeigt ein Gemälde von Niccolò Bambini († 1736)
+und ist gemeinfrei.
+
+## Lernen mit KI?
 
 **Die Krücke.** In einem Feldexperiment mit knapp tausend Schülern verbesserte ungebremster
 GPT-4-Zugang die Übungsnoten um 48 %. In der Prüfung ohne KI schnitten dieselben Schüler danach
@@ -33,15 +40,15 @@ allein reichte dafür nicht: Die Plattform musste die Struktur erzwingen
 
 Die Frage lautet also nicht „KI ja oder nein“, sondern „welches Design“.
 
-Ariadne erfindet dabei kein neues Lernen. Sie macht die Techniken billig, deren Wirksamkeit am besten
+**Ariadne** erfindet dabei kein neues Lernen. Sie macht die Techniken billig, deren Wirksamkeit am besten
 belegt ist, die Studierende aber kaum nutzen, weil sie mühsam sind: Abrufübung, verteiltes Wiederholen,
 Selbsterklärung, sofortiges Feedback, verschachteltes Üben
 ([Dunlosky et al. 2013](https://doi.org/10.1177/1529100612453266)).
 
 ## Das Prinzip: das Labyrinth
 
-Ein Tutor, der mehr weiß als der Lernende, steht vor einem Paradox: Er kennt die Antwort, aber gerade
-die Antwort darf er nicht geben. Im Mythos gibt Ariadne Theseus einen Faden. Durch das Labyrinth gehen
+LLMs haben heutzutage ein imenese Fachwissen. Ein Tutor, der mehr weiß als der Schüler, steht aber vor einem Problem: Er kennt die Antwort, aber gerade
+die Antwort darf er nicht geben, sonst hätte der Schüler nichts gelernt. Im Grieschichen Mythos gibt Ariadne Theseus einen Faden. Durch das Labyrinth gehen
 muss er selbst.
 
 <p align="center">
@@ -50,9 +57,9 @@ muss er selbst.
 
 Die Denkarbeit bleibt beim Lernenden: generieren, abrufen, selbst erklären.
 Ariadne übernimmt Steuerung und Rückmeldung: passende Aufgaben, dosierte Hinweise, sofortiges Feedback,
-geplante Wiederholung, sichtbar gemachte Fehlvorstellungen.
+geplante Wiederholung, sichtbar gemachte Fehlvorstellungen. Dabei "lockt" er den Schüler geziehlt in Richtung Erkenntnis, die er sich aber immernoch selber erarbeitet. 
 
-Lehrreiche Sackgassen lässt sie zu, unproduktive entschärft sie früh. Wo immer möglich, widerlegt nicht
+Lehrreiche Sackgassen lässt Ariadne zu, unproduktive entschärft er früh. Wo immer möglich, widerlegt nicht
 die KI einen Irrtum, sondern die Maschine: Vorhersage aufschreiben, Code ausführen, vergleichen.
 
 ## Struktur gehört in Code, nicht in den Prompt
@@ -251,10 +258,5 @@ pruefer-validierung/   Testpaare für den Prüfer (T7)
 
 </details>
 
-## Lizenz und Bild
-
-Der Code steht unter der [MIT-Lizenz](LICENSE). Das Konzept in `konzept/` mit PDF, HTML-Fassung und den beiden
-Abbildungen steht unter [CC BY 4.0](konzept/LICENSE). Das Titelbild zeigt ein Gemälde von Niccolò Bambini († 1736)
-und ist gemeinfrei.
 
 Concept & Architecture: Julian Trude. Authored with Claude Opus 5.5.
