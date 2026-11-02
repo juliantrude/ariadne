@@ -35,3 +35,8 @@ eskalation = "claude-sonnet-5-5"
 timeout_s = 90
 # Antworten ohne Belegmarker und kürzer als das gelten nicht als Fachaussage.
 min_zeichen = 400
+
+[dashboard]
+# Aufruf von md-dashboard, falls es nicht im PATH liegt.
+# befehl = "node /pfad/zu/markdown-dashboard/bin/md-dashboard.js"
+port = 4173

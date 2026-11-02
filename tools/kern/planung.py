@@ -36,6 +36,10 @@ def _cfg(abschnitt: str) -> dict:
     return {**standard, **konfig().get(abschnitt, {})}
 
 
+def ziel_beherrschung() -> int:
+    return _cfg("meilenstein")["ziel_beherrschung"]
+
+
 def pfad(kid: str):
     return wurzel() / "learner" / "kapitel" / f"{kid}.json"
 

@@ -189,6 +189,15 @@ ein eigenes Git-Repo mit `ariadne.toml`, `learner/`, `material/` und `sitzungen/
 `.claude/settings.json` aktiviert das Plugin nur dort und schaltet die Eingabevorschläge von Claude Code ab,
 weil sie sonst die gesuchte Antwort vorschlagen. Außerhalb eines Lern-Repos schweigen die Hooks.
 
+## Dashboard
+
+`/ariadne:dashboard` oder `ariadne dashboard` im Lern-Repo öffnet den Lernstand im Browser und hält ihn aktuell: Beherrschungsstufen
+als Heatmap je Bereich und Kapitel, Schwächen, Plan, Termine, Lernzeit und Selbsteinschätzung. Ein Konzept ab Stufe 3 wackelt, solange
+es fällig ist oder eine offene Fehlvorstellung hat. Das Dashboard liest nur.
+
+Gerendert wird es von [md-dashboard](https://github.com/juliantrude/markdown-dashboard). Entweder `md-dashboard` liegt im `PATH`, oder der
+Aufruf steht in `ariadne.toml` unter `[dashboard]`, etwa `befehl = "node /pfad/zu/markdown-dashboard/bin/md-dashboard.js"`.
+
 ## Grenzen
 
 - **Ariadne ist nicht empirisch untersucht.** Das Konzept begründet, warum sie plausibel wirkt, nicht dass sie

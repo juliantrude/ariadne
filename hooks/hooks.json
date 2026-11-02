@@ -1,5 +1,6 @@
 {
   "description": "Ariadne: Lernstand beim Start, gemessene Lernzeit, Schreibschutz für das Lernermodell, Prüfkette für jede Antwort, gezeigt wird nur die geprüfte Fassung. Wirkt nur in Verzeichnissen mit einer ariadne.toml.",
+  "modules": ["./register.tsx"],
   "hooks": {
     "SessionStart": [
       {"hooks": [{"type": "command", "command": "uv run --quiet --project \"${CLAUDE_PLUGIN_ROOT}\" python \"${CLAUDE_PLUGIN_ROOT}/hooks/session_start.py\""}]}

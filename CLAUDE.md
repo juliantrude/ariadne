@@ -6,8 +6,8 @@ Die Hooks wirken nur in Lern-Repos; hier schweigen sie.
 
 - `regeln.md` – Tutor-Regeln, eingespielt vom SessionStart-Hook. Das ist der frühere Inhalt der CLAUDE.md des Tutors.
 - `skills/` – Skills, aufrufbar als `/ariadne:<name>`. Werkzeuge immer über `"${CLAUDE_PLUGIN_ROOT}/bin/ariadne" <werkzeug>`.
-- `hooks/` – `hooks.json` und die Hook-Skripte.
-- `tools/` – CLI-Werkzeuge, Logik in `tools/kern/`. Datenwurzel: `ARIADNE_ROOT`, sonst aufwärts nach `ariadne.toml`.
+- `hooks/` – `hooks.json` und die Hook-Skripte. `register.tsx` ist ein Mod und zeichnet das Startband über der Eingabe (Test: `claude plugin test .`).
+- `tools/` – CLI-Werkzeuge, Logik in `tools/kern/`. Das Dashboard rechnet in `kern/uebersicht.py` und schreibt in `kern/dashboard.py` Markdown für md-dashboard. Datenwurzel: `ARIADNE_ROOT`, sonst aufwärts nach `ariadne.toml`.
 - `vorlage/` – Inhalt eines neuen Lern-Repos.
 - `konzept/` – Konzept-PDF; jede Regel muss sich darauf zurückführen lassen.
 
