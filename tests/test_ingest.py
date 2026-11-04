@@ -52,3 +52,18 @@ def test_m1_einlesen_und_zitieren(repo):
     assert fehler == []
     fehler, _ = pruefe_zitate('⟦"walking the page table" | skript.pdf S. 2⟧')
     assert fehler[0].startswith("nicht prüfbar")
+
+
+def test_einlesen_durch_verknuepften_materialordner(repo, tmp_path_factory):
+    """material/<feld> darf ein Link auf einen Ordner außerhalb des Repos sein (z. B. Kursordner)."""
+    import ingest
+
+    aussen = tmp_path_factory.mktemp("kurs") / "material"
+    aussen.mkdir()
+    (aussen / "folien.pdf").write_bytes(mini_pdf([["Ein Satz auf der ersten Seite, lang genug zum Pruefen."] * 6]))
+    (repo / "material" / "uni").mkdir()
+    (repo / "material" / "uni" / "kurs").symlink_to(aussen)
+    d = ingest.einlesen(repo / "material" / "uni" / "kurs" / "folien.pdf")
+    assert d["pfad"] == "uni/kurs/folien.pdf"
+    with pytest.raises(SystemExit):
+        ingest.einlesen(aussen / "folien.pdf")

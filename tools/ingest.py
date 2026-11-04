@@ -2,6 +2,7 @@
 Aufruf: ariadne ingest material/os/skript.pdf
 Ergebnis: material/.text/<slug>/001.txt ... und ein Eintrag in material/.text/index.json.
 Seitenzahl = PDF-Seite, wie im Viewer gezählt (nicht die gedruckte Seitenzahl)."""
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -15,8 +16,9 @@ def slug_fuer(rel: Path) -> str:
 
 
 def einlesen(pdf: Path) -> dict:
-    pdf = pdf.resolve()
-    material = (wurzel() / "material").resolve()
+    # Links nicht auflösen: material/<feld> darf auf einen Ordner außerhalb des Repos zeigen.
+    pdf = Path(os.path.abspath(pdf))
+    material = Path(os.path.abspath(wurzel() / "material"))
     try:
         rel = pdf.relative_to(material)
     except ValueError:
